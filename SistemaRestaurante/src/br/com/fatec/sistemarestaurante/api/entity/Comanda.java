@@ -19,6 +19,10 @@ public class Comanda {
 		this.dataAbertura = dataAbertura;
 		this.dataFechamento = dataFechamento;
 	}
+	
+	public Comanda(){
+		
+	}
 	public Long getId() {
 		return id;
 	}

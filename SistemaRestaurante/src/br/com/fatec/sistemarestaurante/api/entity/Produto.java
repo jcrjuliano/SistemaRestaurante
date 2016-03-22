@@ -20,6 +20,10 @@ public class Produto {
 		this.preco = preco;
 	}
 
+	public Produto() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

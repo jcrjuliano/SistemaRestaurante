@@ -1,6 +1,8 @@
 package br.com.fatec.sistemarestaurante.api.entity;
 
 public class ItemProd {
+	public ItemProd() {
+	}
 	public static final String TABLE = "SCR_ITEM_PROD";
 	public static final String COL_ID = "ID";
 	public static final String COL_ID_PRODUTO = "ID_PRODUTO";

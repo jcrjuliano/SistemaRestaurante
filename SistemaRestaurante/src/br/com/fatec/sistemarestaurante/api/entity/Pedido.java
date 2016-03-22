@@ -26,7 +26,10 @@ public class Pedido {
 		this.idComanda = idComanda;
 		this.idGarcom = idGarcom;
 	}
-
+	
+	public Pedido(){
+		
+	}
 	public Long getId() {
 		return id;
 	}

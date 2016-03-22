@@ -14,6 +14,10 @@ public class ListaPedidos {
 		this.idPedido = idPedido;
 		this.status = status;
 	}
+	
+	public ListaPedidos(){
+		
+	}
 	public Long getId() {
 		return id;
 	}

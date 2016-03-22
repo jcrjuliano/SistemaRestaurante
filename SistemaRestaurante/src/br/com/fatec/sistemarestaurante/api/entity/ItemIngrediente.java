@@ -15,6 +15,10 @@ public class ItemIngrediente {
 		this.ingredId = ingredId;
 		this.quantidade = quantidade;
 	}
+	
+	public ItemIngrediente(){
+		
+	}
 	public Long getProdId() {
 		return prodId;
 	}

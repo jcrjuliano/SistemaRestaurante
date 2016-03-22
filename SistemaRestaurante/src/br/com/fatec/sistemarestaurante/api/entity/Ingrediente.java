@@ -11,6 +11,10 @@ public class Ingrediente {
 		this.id = id;
 		this.descricao = descricao;
 	}
+	
+	public Ingrediente(){
+	
+	}
 	public Long getId() {
 		return id;
 	}

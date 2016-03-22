@@ -22,6 +22,10 @@ public class Garcom {
 		this.sexo = sexo;
 		this.idade = idade;
 	}
+	
+	public Garcom(){
+		
+	}
 
 	public Long getId() {
 		return id;
