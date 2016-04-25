@@ -1,14 +1,15 @@
 package br.com.fatec.sistemarestaurante.test.dao;
 
 import java.util.List;
-
+// Usar este org.junit.Assert para sumir com os erros.
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.ListaPedidosDAO;
 import br.com.fatec.sistemarestaurante.api.entity.ListaPedidos;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
-import junit.framework.Assert;
+
 
 public class ListaPedidosDAOTest {
 	

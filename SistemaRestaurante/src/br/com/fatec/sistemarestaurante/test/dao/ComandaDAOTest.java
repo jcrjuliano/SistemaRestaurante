@@ -2,13 +2,14 @@ package br.com.fatec.sistemarestaurante.test.dao;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.ComandaDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Comanda;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
-import junit.framework.Assert;
+
 
 public class ComandaDAOTest {
 
@@ -36,7 +37,7 @@ public class ComandaDAOTest {
 		Assert.assertNotNull(comandaSalvo);
 		Assert.assertEquals("19/03/2016 19:20:00", comandaSalvo.getDataAbertura());
 		Assert.assertEquals("19/03/2016 23:15:20", comandaSalvo.getDataFechamento());
-		Assert.assertEquals(153.40, comandaSalvo.getValorTotal());
+		Assert.assertEquals(153,40, comandaSalvo.getValorTotal());
 		
 	}
 	
@@ -65,7 +66,7 @@ public class ComandaDAOTest {
 		Assert.assertNotNull(comandaAtualizado);
 		Assert.assertEquals("20/03/2016 15:00:00", comandaAtualizado.getDataAbertura());
 		Assert.assertEquals("20/03/2016 18:00:00", comandaAtualizado.getDataFechamento());
-		Assert.assertEquals(74.80, comandaAtualizado.getValorTotal());
+		Assert.assertEquals(74,80, comandaAtualizado.getValorTotal());
 		
 	}
 	
@@ -109,11 +110,11 @@ Comanda comandaSalvar = new Comanda();
 		Assert.assertEquals(2, encontrados.size());
 		Assert.assertEquals("19/03/2016 19:20:00", encontrados.get(0).getDataAbertura());
 		Assert.assertEquals("19/03/2016 23:15:20", encontrados.get(0).getDataFechamento());
-		Assert.assertEquals(153.40, encontrados.get(0).getValorTotal());
+		Assert.assertEquals(153,40, encontrados.get(0).getValorTotal());
 		
 		Assert.assertEquals("20/03/2016 15:00:00", encontrados.get(1).getDataAbertura());
 		Assert.assertEquals("20/03/2016 18:00:00", encontrados.get(1).getDataFechamento());
-		Assert.assertEquals(74.80, encontrados.get(1).getValorTotal());
+		Assert.assertEquals(74,80, encontrados.get(1).getValorTotal());
 		
 		
 	}

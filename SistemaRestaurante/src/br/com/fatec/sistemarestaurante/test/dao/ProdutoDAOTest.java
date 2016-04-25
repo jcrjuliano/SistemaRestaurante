@@ -2,13 +2,14 @@ package br.com.fatec.sistemarestaurante.test.dao;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.ProdutoDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Produto;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
-import junit.framework.Assert;
+
 
 public class ProdutoDAOTest {
 	
@@ -35,7 +36,8 @@ public class ProdutoDAOTest {
 		Assert.assertNotNull(produtoSalvo);
 		Assert.assertEquals("Coca-cola", produtoSalvo.getDescricao());
 		Assert.assertEquals("Disponivel", produtoSalvo.getStatus());
-		Assert.assertEquals(8.50, produtoSalvo.getPreco());
+		Assert.assertEquals(8,50, produtoSalvo.getPreco());
+		
 		
 	}
 	
@@ -62,7 +64,7 @@ public class ProdutoDAOTest {
 		Assert.assertNotNull(produtoAtualizado);
 		Assert.assertEquals("Fanta", produtoAtualizado .getDescricao());
 		Assert.assertEquals("Indisponivel", produtoAtualizado .getStatus());
-		Assert.assertEquals(8.00, produtoAtualizado.getPreco());
+		Assert.assertEquals(8,00, produtoAtualizado.getPreco());
 	}
 	
 	@Test
@@ -103,11 +105,11 @@ public class ProdutoDAOTest {
 		Assert.assertEquals(2, encontrados.size());
 		Assert.assertEquals("Coca-cola", encontrados.get(0).getDescricao());
 		Assert.assertEquals("Disponivel", encontrados.get(0).getStatus());
-		Assert.assertEquals(8.50, encontrados.get(0).getPreco());
+		Assert.assertEquals(8,50, encontrados.get(0).getPreco());
 		
 		Assert.assertEquals("Fanta", encontrados.get(1).getDescricao());
 		Assert.assertEquals("Disponivel", encontrados.get(1).getStatus());
-		Assert.assertEquals(8.00, encontrados.get(1).getPreco());
+		Assert.assertEquals(8,00, encontrados.get(1).getPreco());
 		
 	}
 }

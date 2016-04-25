@@ -2,13 +2,14 @@ package br.com.fatec.sistemarestaurante.test.dao;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.PedidoDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Pedido;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
-import junit.framework.Assert;
+
 
 public class PedidoDAOTest {
 	
@@ -41,7 +42,7 @@ public class PedidoDAOTest {
 		Assert.assertEquals(Long.valueOf("1"), pedidoSalvo.getIdComanda());
 		Assert.assertEquals(Long.valueOf("1"), pedidoSalvo.getIdGarcom());
 		Assert.assertEquals("19/03/2016", pedidoSalvo.getDataAbertura());
-		Assert.assertEquals(12.90, pedidoSalvo.getValorTotal());
+		Assert.assertEquals(12,90, pedidoSalvo.getValorTotal());
 		
 	}
 	
@@ -74,7 +75,7 @@ Pedido pedidoSalvar = new Pedido();
 		Assert.assertEquals(Long.valueOf("2"), PedidoAtualizado.getIdComanda());
 		Assert.assertEquals(Long.valueOf("2"), PedidoAtualizado.getIdGarcom());
 		Assert.assertEquals("15/03/2016", PedidoAtualizado.getDataAbertura());
-		Assert.assertEquals(100.00, PedidoAtualizado.getValorTotal());
+		Assert.assertEquals(100,00, PedidoAtualizado.getValorTotal());
 	}
 	
 	@Test
@@ -125,13 +126,13 @@ Pedido pedidoSalvar = new Pedido();
 		Assert.assertEquals(Long.valueOf("1"), encontrados.get(0).getIdComanda());
 		Assert.assertEquals(Long.valueOf("1"), encontrados.get(0).getIdGarcom());
 		Assert.assertEquals("19/03/2016", encontrados.get(0).getDataAbertura());
-		Assert.assertEquals(12.90, encontrados.get(0).getValorTotal());
+		Assert.assertEquals(12,90, encontrados.get(0).getValorTotal());
 		
 		Assert.assertEquals("Fechada", encontrados.get(1).getStatus());
 		Assert.assertEquals(Long.valueOf("2"), encontrados.get(1).getIdComanda());
 		Assert.assertEquals(Long.valueOf("2"), encontrados.get(1).getIdGarcom());
 		Assert.assertEquals("15/03/2016", encontrados.get(1).getDataAbertura());
-		Assert.assertEquals(100.00, encontrados.get(1).getValorTotal());
+		Assert.assertEquals(100,00, encontrados.get(1).getValorTotal());
 	}
 
 }

@@ -2,13 +2,14 @@ package br.com.fatec.sistemarestaurante.test.dao;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.ItemProdDAO;
 import br.com.fatec.sistemarestaurante.api.entity.ItemProd;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
-import junit.framework.Assert;
+
 
 public class ItemProdDAOTest {
 	
@@ -35,7 +36,7 @@ public class ItemProdDAOTest {
 		Assert.assertNotNull(itemProdSalvo);
 		Assert.assertEquals(Long.valueOf(1), itemProdSalvo.getIdPedido());
 		Assert.assertEquals(Long.valueOf(5), itemProdSalvo.getIdProduto());
-		Assert.assertEquals(10.55, itemProdSalvo.getPreco());
+		Assert.assertEquals(10,55, itemProdSalvo.getPreco());
 		
 	}
 	
@@ -62,7 +63,7 @@ public class ItemProdDAOTest {
 		Assert.assertNotNull(itemProdAtualizado);
 		Assert.assertEquals(Long.valueOf(2), itemProdAtualizado.getIdPedido());
 		Assert.assertEquals(Long.valueOf(3), itemProdAtualizado.getIdProduto());
-		Assert.assertEquals(16.55, itemProdAtualizado.getPreco());
+		Assert.assertEquals(16,55, itemProdAtualizado.getPreco());
 	}
 	
 	@Test
@@ -103,11 +104,11 @@ ItemProd itemProdSalvar = new ItemProd();
 		Assert.assertEquals(2, encontrados.size());
 		Assert.assertEquals(Long.valueOf(1), encontrados.get(0).getIdPedido());
 		Assert.assertEquals(Long.valueOf(1), encontrados.get(0).getIdProduto());
-		Assert.assertEquals(10.55, encontrados.get(0).getPreco());
+		Assert.assertEquals(10,55, encontrados.get(0).getPreco());
 		
 		Assert.assertEquals(Long.valueOf(2), encontrados.get(1).getIdPedido());
 		Assert.assertEquals(Long.valueOf(3), encontrados.get(1).getIdProduto());
-		Assert.assertEquals(16.55, encontrados.get(1).getPreco());
+		Assert.assertEquals(16,55, encontrados.get(1).getPreco());
 		
 	}
 }

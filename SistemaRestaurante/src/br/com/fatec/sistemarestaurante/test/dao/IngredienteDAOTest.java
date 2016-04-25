@@ -2,13 +2,13 @@ package br.com.fatec.sistemarestaurante.test.dao;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.IngredienteDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Ingrediente;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
-import junit.framework.Assert;
 
 public class IngredienteDAOTest {
 
