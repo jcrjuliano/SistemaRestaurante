@@ -1,5 +1,9 @@
 package br.com.fatec.sistemarestaurante.api.entity;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class Comanda {
 	
 	public static final String TABLE = "SCR_COMANDA";
@@ -46,6 +50,14 @@ public class Comanda {
 	}
 	public void setDataFechamento(String dataFechamento) {
 		this.dataFechamento = dataFechamento;
+	}
+	
+	public static List<String> getColunas(){
+		return Lists.newArrayList(COL_ID, COL_VALOR_TOTAL, COL_DATA_ABERTURA, COL_DATA_FECHAMENTO);
+	}
+	
+	public static String[] getColunasArray(){
+		return new String[] {COL_ID, COL_VALOR_TOTAL, COL_DATA_ABERTURA, COL_DATA_FECHAMENTO};
 	}
 	
 }

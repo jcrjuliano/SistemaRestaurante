@@ -1,5 +1,9 @@
 package br.com.fatec.sistemarestaurante.api.entity;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class Produto {
 	//SCR = SISTEMA CONTROLE RESTAURANTE
 	public static final String TABLE = "SCR_PRODUTO";
@@ -55,5 +59,14 @@ public class Produto {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
+	
+	public static List<String> getColunas() {
+		return Lists.newArrayList(COL_ID, COL_DESCRICAO, COL_STATUS, COL_PRECO);
+	}
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_DESCRICAO, COL_STATUS, COL_PRECO };
+	}
+
 	
 }

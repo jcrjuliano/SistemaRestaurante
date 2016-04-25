@@ -1,5 +1,9 @@
 package br.com.fatec.sistemarestaurante.api.entity;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class ListaPedidos {
 	public static final String TABLE = "SCR_LISTA_PEDIDOS";
 	public static final String COL_ID = "ID";
@@ -35,6 +39,14 @@ public class ListaPedidos {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public static List<String> getColunas() {
+		return Lists.newArrayList(COL_ID, COL_ID_PEDIDO, COL_STATUS);
+	}
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_ID_PEDIDO, COL_STATUS };
 	}
 	
 	
