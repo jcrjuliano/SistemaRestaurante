@@ -1,5 +1,9 @@
 package br.com.fatec.sistemarestaurante.api.entity;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class Garcom {
 	public static final String TABLE = "SCR_GARCOM";
 	public static final String COL_ID = "ID";
@@ -65,6 +69,14 @@ public class Garcom {
 
 	public void setIdade(String idade) {
 		this.idade = idade;
+	}
+	
+	public static List<String> getColunas() {
+		return Lists.newArrayList(COL_ID, COL_NOME, COL_REGISTRO, COL_SEXO, COL_IDADE);
+	}
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_NOME, COL_REGISTRO, COL_SEXO, COL_IDADE};
 	}
 	
 	

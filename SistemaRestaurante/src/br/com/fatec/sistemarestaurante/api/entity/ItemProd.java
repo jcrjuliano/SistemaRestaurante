@@ -1,5 +1,9 @@
 package br.com.fatec.sistemarestaurante.api.entity;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class ItemProd {
 	public ItemProd() {
 	}
@@ -44,6 +48,13 @@ public class ItemProd {
 		this.preco = preco;
 	}
 	
-	
+
+	public static List<String> getColunas() {
+		return Lists.newArrayList(COL_ID, COL_ID_PRODUTO, COL_ID_PEDIDO, COL_PRECO);
+	}
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_ID_PRODUTO, COL_ID_PEDIDO, COL_PRECO};
+	}
 	
 }
