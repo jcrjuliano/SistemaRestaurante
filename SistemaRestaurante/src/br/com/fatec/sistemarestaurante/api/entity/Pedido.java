@@ -83,21 +83,11 @@ public class Pedido {
 	}
 	
 	public static List<String> getColunas() {
-		return Lists.newArrayList(COL_ID, 
-								COL_STATUS, 
-								COL_DATA_ABERTURA, 
-								COL_VALOR_TOTAL, 
-								COL_ID_COMANDA, 
-								COL_ID_GARCOM);
+		return Lists.newArrayList(COL_ID, COL_STATUS, COL_DATA_ABERTURA, COL_VALOR_TOTAL, COL_ID_COMANDA, COL_ID_GARCOM);
 	}
 
 	public static String[] getColunasArray() {
-		return new String[] { COL_ID, 
-				COL_STATUS, 
-				COL_DATA_ABERTURA, 
-				COL_VALOR_TOTAL, 
-				COL_ID_COMANDA, 
-				COL_ID_GARCOM };
+		return new String[] { COL_ID, COL_STATUS, COL_DATA_ABERTURA, COL_VALOR_TOTAL, COL_ID_COMANDA, COL_ID_GARCOM };
 	}
 	
 }

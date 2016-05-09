@@ -1,7 +1,5 @@
 package br.com.fatec.sistemarestaurante.core.dao;
 
-import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +12,7 @@ import com.google.common.collect.Lists;
 import br.com.fatec.sistemarestaurante.api.dao.GarcomDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Garcom;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
+import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
 
 public class GarcomDAOImpl implements GarcomDAO {
 
