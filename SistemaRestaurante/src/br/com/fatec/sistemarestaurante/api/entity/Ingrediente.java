@@ -32,12 +32,13 @@ public class Ingrediente {
 		this.descricao = descricao;
 	}
 	
-	public static List<String> getColunas(){
+
+	public static List<String> getColunas() {
 		return Lists.newArrayList(COL_ID, COL_DESCRICAO);
 	}
-	
-	public static String[] getColunasArray(){
-		return new String[] {COL_ID, COL_DESCRICAO};
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_DESCRICAO};
 	}
 	
 	

@@ -35,7 +35,7 @@
 		<createTable tableName="SCR_ITEM_PROD">
 			<column name="PROD_ID" type="BIGINT" />
 			<column name="ID_PRODUTO" type="BIGINT" />
-			<column name="ID_INGREDIENTE" type="BIGINT" />
+			<column name="ID_PEDIDO" type="BIGINT" />
 			<column name="PRECO" type="DOUBLE" />
 		</createTable>
 	</changeSet>
@@ -43,7 +43,7 @@
 	<changeSet id="050" author="laleska.santos">
 		<addPrimaryKey columnNames="ID" tableName="SCR_INGREDIENTE" />
 		<addPrimaryKey columnNames="ID" tableName="SCR_PRODUTO" />
-		<addPrimaryKey columnNames="ID" tableName="SCR_ITEM_PROD" />
+		<addPrimaryKey columnNames="PROD_ID" tableName="SCR_ITEM_PROD" />
 	</changeSet>
 
 
@@ -51,7 +51,7 @@
 		<createTable tableName="SCR_PEDIDO">
 			<column name="ID" type="BIGINT" />
 			<column name="STATUS" type="VARCHAR(255)" />
-			<column name="DATA_ABERTURA" type="DATE" />
+			<column name="DATA_ABERTURA" type="BIGINT" />
 			<column name="VALOR_TOTAL" type="DOUBLE" />
 			<column name="ID_COMANDA" type="BIGINT" />
 			<column name="ID_GARCOM" type="BIGINT" />
@@ -70,8 +70,8 @@
 		<createTable tableName="SCR_COMANDA">
 			<column name="ID" type="BIGINT" />
 			<column name="VALOR_TOTAL" type="DOUBLE" />
-			<column name="DATA_ABERTURA" type="DATE" />
-			<column name="DATA_FECHAMENTO" type="DATE" />
+			<column name="DATA_ABERTURA" type="BIGINT" />
+			<column name="DATA_FECHAMENTO" type="BIGINT" />
 		</createTable>
 	</changeSet>
 
@@ -166,9 +166,9 @@
 		<addForeignKeyConstraint constraintName="FK_ITEM_PROD_PRODUTO"
 			referencedTableName="SCR_PRODUTO" referencedColumnNames="ID"
 			baseTableName="SCR_ITEM_PROD" baseColumnNames="ID_PRODUTO" />
-
-		<addForeignKeyConstraint constraintName="FK_ITEM_PROD_PRODUTO"
-			referencedTableName="SCR_PRODUTO" referencedColumnNames="ID"
+	<!-- PAU AQUI -->
+		<addForeignKeyConstraint constraintName="FK_ITEM_PROD_PEDIDO"
+			referencedTableName="SCR_PEDIDO" referencedColumnNames="ID"
 			baseTableName="SCR_ITEM_PROD" baseColumnNames="ID_PEDIDO" />
 	</changeSet>
 
@@ -177,8 +177,8 @@
 			referencedTableName="SCR_PRODUTO" referencedColumnNames="ID"
 			baseTableName="SCR_ITEM_INGREDIENTE" baseColumnNames="PROD_ID" />
 
-		<addForeignKeyConstraint constraintName="FK_ITEM_PROD_PRODUTO"
-			referencedTableName="SCR_PRODUTO" referencedColumnNames="ID"
+		<addForeignKeyConstraint constraintName="FK_ITEM_INGREDIENTE_INGREDIENTE"
+			referencedTableName="SCR_INGREDIENTE" referencedColumnNames="ID"
 			baseTableName="SCR_ITEM_INGREDIENTE" baseColumnNames="INGRED_ID" />
 	</changeSet>
 

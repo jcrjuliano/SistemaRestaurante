@@ -108,8 +108,8 @@ public class GarcomDAOImpl implements GarcomDAO {
 			update.setString(1, garcomAtualizar.getNome());
 			update.setString(2, garcomAtualizar.getRegistro());
 			update.setString(3, garcomAtualizar.getSexo());
-			update.setString(3, garcomAtualizar.getIdade());
-			update.setLong(4, garcomAtualizar.getId());
+			update.setString(4, garcomAtualizar.getIdade());
+			update.setLong(5, garcomAtualizar.getId());
 			update.execute();
 		} catch (Exception e) {
 			throw new RuntimeException(e);

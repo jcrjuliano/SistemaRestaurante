@@ -71,12 +71,12 @@ public class Garcom {
 		this.idade = idade;
 	}
 	
-	public static List<String> getColunas(){
+	public static List<String> getColunas() {
 		return Lists.newArrayList(COL_ID, COL_NOME, COL_REGISTRO, COL_SEXO, COL_IDADE);
 	}
-	
-	public static String[] getColunasArray(){
-		return new String[] {COL_ID, COL_NOME, COL_REGISTRO, COL_SEXO, COL_IDADE};
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_ID, COL_NOME, COL_REGISTRO, COL_SEXO, COL_IDADE};
 	}
 	
 	

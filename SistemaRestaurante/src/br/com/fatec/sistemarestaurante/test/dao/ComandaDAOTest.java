@@ -1,5 +1,9 @@
 package br.com.fatec.sistemarestaurante.test.dao;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -8,10 +12,11 @@ import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.ComandaDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Comanda;
+import br.com.fatec.sistemarestaurante.test.commons.TestBase;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 
-public class ComandaDAOTest {
+public class ComandaDAOTest extends TestBase {
 
 	private ComandaDAO dao;
 	
@@ -25,8 +30,15 @@ public class ComandaDAOTest {
 
 		Comanda comandaSalvar = new Comanda();
 		
-		comandaSalvar.setDataAbertura("19/03/2016 19:20:00");
-		comandaSalvar.setDataFechamento("19/03/2016 23:15:20");
+		Calendar dataDeAbertura = Calendar.getInstance();
+		dataDeAbertura.set(2016, 2, 19, 19, 20, 0);
+		Calendar dataDeFechamento = Calendar.getInstance();
+		dataDeFechamento.set(2016, 2, 19, 23, 15, 0);
+		
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		comandaSalvar.setDataAbertura(dataDeAbertura.getTime());
+		comandaSalvar.setDataFechamento(dataDeFechamento.getTime());
 		comandaSalvar.setValorTotal(153.40);	
 		
 		
@@ -35,8 +47,8 @@ public class ComandaDAOTest {
 		Comanda comandaSalvo = this.dao.findById(id);
 		
 		Assert.assertNotNull(comandaSalvo);
-		Assert.assertEquals("19/03/2016 19:20:00", comandaSalvo.getDataAbertura());
-		Assert.assertEquals("19/03/2016 23:15:20", comandaSalvo.getDataFechamento());
+		Assert.assertEquals("19/03/2016 19:20:00", format.format(comandaSalvo.getDataAbertura()));
+		Assert.assertEquals("19/03/2016 23:15:00", format.format(comandaSalvo.getDataFechamento()));
 		Assert.assertEquals(153,40, comandaSalvo.getValorTotal());
 		
 	}
@@ -45,8 +57,15 @@ public class ComandaDAOTest {
 	public void testUpdate(){
 		Comanda comandaSalvar = new Comanda();
 		
-		comandaSalvar.setDataAbertura("19/03/2016 19:20:00");
-		comandaSalvar.setDataFechamento("19/03/2016 23:15:20");
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Calendar dataDeAbertura = Calendar.getInstance();
+		Calendar dataDeFechamento = Calendar.getInstance();
+		
+		dataDeAbertura.set(2016, 2, 19, 19, 20, 0);
+		dataDeFechamento.set(2016, 2, 19, 23, 15, 0);
+		
+		comandaSalvar.setDataAbertura(dataDeAbertura.getTime());
+		comandaSalvar.setDataFechamento(dataDeFechamento.getTime());
 		comandaSalvar.setValorTotal(153.40);	
 		
 		
@@ -55,8 +74,11 @@ public class ComandaDAOTest {
 		
 		Comanda comandaAtualizar = this.dao.findById(id);
 		
-		comandaAtualizar.setDataAbertura("20/03/2016 15:00:00");
-		comandaAtualizar.setDataFechamento("20/03/2016 18:00:00");
+		dataDeAbertura.set(2016, 2, 20, 15, 00, 0);
+		dataDeFechamento.set(2016, 2, 20, 18, 00, 0);
+		
+		comandaAtualizar.setDataAbertura(dataDeAbertura.getTime());
+		comandaAtualizar.setDataFechamento(dataDeFechamento.getTime());
 		comandaAtualizar.setValorTotal(74.80);
 		
 		this.dao.update(comandaAtualizar);
@@ -64,19 +86,24 @@ public class ComandaDAOTest {
 		Comanda comandaAtualizado = this.dao.findById(id);
 				
 		Assert.assertNotNull(comandaAtualizado);
-		Assert.assertEquals("20/03/2016 15:00:00", comandaAtualizado.getDataAbertura());
-		Assert.assertEquals("20/03/2016 18:00:00", comandaAtualizado.getDataFechamento());
+		Assert.assertEquals("20/03/2016 15:00:00", format.format(comandaAtualizado.getDataAbertura()));
+		Assert.assertEquals("20/03/2016 18:00:00", format.format(comandaAtualizado.getDataFechamento()));
 		Assert.assertEquals(74,80, comandaAtualizado.getValorTotal());
-		
 	}
 	
 	@Test
 	public void testDelete(){
-Comanda comandaSalvar = new Comanda();
+		Comanda comandaSalvar = new Comanda();
+				
+		Calendar dataDeAbertura = Calendar.getInstance();
+		Calendar dataDeFechamento = Calendar.getInstance();
 		
-		comandaSalvar.setDataAbertura("19/03/2016 19:20:00");
-		comandaSalvar.setDataFechamento("19/03/2016 23:15:20");
-		comandaSalvar.setValorTotal(153.40);	
+		dataDeAbertura.set(2016, 2, 19, 19, 20, 0);
+		dataDeFechamento.set(2016, 2, 19, 23, 15, 0);
+		
+		comandaSalvar.setDataAbertura(dataDeAbertura.getTime());
+		comandaSalvar.setDataFechamento(dataDeFechamento.getTime());
+		comandaSalvar.setValorTotal(153.40);
 		
 		
 		Long id = this.dao.save(comandaSalvar);
@@ -90,15 +117,31 @@ Comanda comandaSalvar = new Comanda();
 	
 	@Test
 	public void testFindAll(){
+		
+		Calendar dataDeAbertura = Calendar.getInstance();
+		Calendar dataDeFechamento = Calendar.getInstance();
+		
+		dataDeAbertura.set(2016, 2, 19, 19, 20, 0);
+		dataDeFechamento.set(2016, 2, 19, 23, 15, 0);
+
+			
 		Comanda com1 = new Comanda();
 		Comanda com2 = new Comanda();
 				
-		com1.setDataAbertura("19/03/2016 19:20:00");
-		com1.setDataFechamento("19/03/2016 23:15:20");
-		com1.setValorTotal(153.40);	
+		dataDeAbertura.set(2016, 2, 19, 19, 20, 0);
+		dataDeFechamento.set(2016, 2, 19, 23, 15, 0);
 		
-		com2.setDataAbertura("20/03/2016 15:00:00");
-		com2.setDataFechamento("20/03/2016 18:00:00");
+		com1.setDataAbertura(dataDeAbertura.getTime());
+		com1.setDataFechamento(dataDeFechamento.getTime());
+		com1.setValorTotal(153.40);
+		
+		//Set data para com2
+		
+		dataDeAbertura.set(2016, 2, 20, 15, 00, 0);
+		dataDeFechamento.set(2016, 2, 20, 18, 00, 0);
+		
+		com2.setDataAbertura(dataDeAbertura.getTime());
+		com2.setDataFechamento(dataDeFechamento.getTime());
 		com2.setValorTotal(74.80);			
 
 		
@@ -108,12 +151,15 @@ Comanda comandaSalvar = new Comanda();
 		List<Comanda> encontrados = this.dao.findAll();
 		
 		Assert.assertEquals(2, encontrados.size());
-		Assert.assertEquals("19/03/2016 19:20:00", encontrados.get(0).getDataAbertura());
-		Assert.assertEquals("19/03/2016 23:15:20", encontrados.get(0).getDataFechamento());
+		//SimpleDateFormat foi criado para fazer a máscara da data, para podermos comparar com uma string.
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		Assert.assertEquals("19/03/2016 19:20:00", format.format(encontrados.get(0).getDataAbertura()));
+		Assert.assertEquals("19/03/2016 23:15:00", format.format(encontrados.get(0).getDataFechamento()));
 		Assert.assertEquals(153,40, encontrados.get(0).getValorTotal());
 		
-		Assert.assertEquals("20/03/2016 15:00:00", encontrados.get(1).getDataAbertura());
-		Assert.assertEquals("20/03/2016 18:00:00", encontrados.get(1).getDataFechamento());
+		Assert.assertEquals("20/03/2016 15:00:00", format.format(encontrados.get(1).getDataAbertura()));
+		Assert.assertEquals("20/03/2016 18:00:00", format.format(encontrados.get(1).getDataFechamento()));
 		Assert.assertEquals(74,80, encontrados.get(1).getValorTotal());
 		
 		

@@ -8,10 +8,11 @@ import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.ProdutoDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Produto;
+import br.com.fatec.sistemarestaurante.test.commons.TestBase;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 
-public class ProdutoDAOTest {
+public class ProdutoDAOTest extends TestBase {
 	
 	private ProdutoDAO dao;
 	

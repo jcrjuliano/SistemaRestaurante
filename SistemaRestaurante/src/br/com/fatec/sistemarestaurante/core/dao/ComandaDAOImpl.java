@@ -1,19 +1,22 @@
 package br.com.fatec.sistemarestaurante.core.dao;
 
+import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
 
-import com.google.common.collect.Lists;
-
 import br.com.fatec.sistemarestaurante.api.dao.ComandaDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Comanda;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
-import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
+
+import com.google.common.collect.Lists;
 public class ComandaDAOImpl implements ComandaDAO {
 
 	@Override
@@ -24,17 +27,18 @@ public class ComandaDAOImpl implements ComandaDAO {
 			conn = ConfigDBMapper.getDefaultConnection();
 			
 			String colunas = DAOUtils.getColunas(ConfigDBMapper.getDefaultConnectionType(), Comanda.getColunas());
-			
-			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 2, "SEQ_SCR_COMANDA");
+			//Este comanda.getColuns().Size()-1 é para retornar a quantidade de interrogações a ser inserida na QUERY, o -1 é por que a sequence não precisa de interrogações.
+			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), Comanda.getColunas().size()-1, "SEQ_SCR_COMANDA");
 			
 			String sql = "INSERT INTO " + Comanda.TABLE + colunas + " VALUES " + values;
 			
 			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(), Comanda.getColunasArray());
 			
-			insert.setDouble(1, comandaSalvar.getValorTotal());
-			insert.setString(2, comandaSalvar.getDataAbertura());
-			insert.setString(3,  comandaSalvar.getDataFechamento());
 			
+			insert.setDouble(1, comandaSalvar.getValorTotal());
+			insert.setLong(2, comandaSalvar.getDataAbertura().getTime());
+			insert.setLong(3, comandaSalvar.getDataFechamento().getTime());
+			insert.execute();
 			ResultSet generatedKeys = insert.getGeneratedKeys();
 			if (generatedKeys.next()){
 				return generatedKeys.getLong(1);
@@ -94,13 +98,15 @@ public class ComandaDAOImpl implements ComandaDAO {
 		Connection conn = null;
 		PreparedStatement update = null;
 		try {
+			SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 			conn = ConfigDBMapper.getDefaultConnection();
 			update = conn.prepareStatement("UPDATE " + Comanda.TABLE + " SET "
 					+ Comanda.COL_VALOR_TOTAL + " = ?, " + Comanda.COL_DATA_ABERTURA + " = ?, " + Comanda.COL_DATA_FECHAMENTO + " = ? " 
 					+ " WHERE " + Comanda.COL_ID + " = ?");
+			
 			update.setDouble(1, comandaAtualizar.getValorTotal());
-			update.setString(2, comandaAtualizar.getDataAbertura());
-			update.setString(3, comandaAtualizar.getDataFechamento());
+			update.setLong(2, comandaAtualizar.getDataAbertura().getTime());
+			update.setLong(3, comandaAtualizar.getDataFechamento().getTime());
 			update.setLong(4, comandaAtualizar.getId());
 			update.execute();
 		} catch (Exception e) {
@@ -135,8 +141,8 @@ public class ComandaDAOImpl implements ComandaDAO {
 		Comanda comanda = new Comanda();
 		comanda.setId(rs.getLong(Comanda.COL_ID));
 		comanda.setValorTotal(rs.getDouble(Comanda.COL_VALOR_TOTAL));
-		comanda.setDataAbertura(rs.getString(Comanda.COL_DATA_ABERTURA));
-		comanda.setDataFechamento(rs.getString(Comanda.COL_DATA_ABERTURA));
+		comanda.setDataAbertura(new Date(rs.getLong(Comanda.COL_DATA_ABERTURA)));
+		comanda.setDataFechamento(new Date(rs.getLong(Comanda.COL_DATA_FECHAMENTO)));
 		return comanda;
 	}
 	

@@ -1,5 +1,8 @@
 package br.com.fatec.sistemarestaurante.api.entity;
 
+
+
+import java.util.Date;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -14,10 +17,10 @@ public class Comanda {
 	
 	private Long id;
 	private Double valorTotal;
-	private String dataAbertura;
-	private String dataFechamento;
-	public Comanda(Long id, Double valorTotal, String dataAbertura,
-			String dataFechamento) {
+	private Date dataAbertura;
+	private Date dataFechamento;
+	public Comanda(Long id, Double valorTotal, Date dataAbertura,
+			Date dataFechamento) {
 		this.id = id;
 		this.valorTotal = valorTotal;
 		this.dataAbertura = dataAbertura;
@@ -39,16 +42,16 @@ public class Comanda {
 	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-	public String getDataAbertura() {
+	public Date getDataAbertura() {
 		return dataAbertura;
 	}
-	public void setDataAbertura(String dataAbertura) {
+	public void setDataAbertura(Date dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
-	public String getDataFechamento() {
+	public Date getDataFechamento() {
 		return dataFechamento;
 	}
-	public void setDataFechamento(String dataFechamento) {
+	public void setDataFechamento(Date dataFechamento) {
 		this.dataFechamento = dataFechamento;
 	}
 	

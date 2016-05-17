@@ -11,6 +11,7 @@ import org.apache.commons.dbutils.DbUtils;
 import com.google.common.collect.Lists;
 
 import br.com.fatec.sistemarestaurante.api.dao.IngredienteDAO;
+import br.com.fatec.sistemarestaurante.api.entity.Comanda;
 import br.com.fatec.sistemarestaurante.api.entity.Ingrediente;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
 import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
@@ -26,13 +27,15 @@ public class IngredienteDAOImpl implements IngredienteDAO {
 			
 			String colunas = DAOUtils.getColunas(ConfigDBMapper.getDefaultConnectionType(), Ingrediente.getColunas());
 			
-			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 2, "SEQ_SCR_INGREDIENTE");
+			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 1, "SEQ_SCR_INGREDIENTE");
 			
 			String sql = "INSERT INTO " + Ingrediente.TABLE + colunas + " VALUES " + values;
 			
 			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(), Ingrediente.getColunasArray());
 			
 			insert.setString(1, ingredienteSalvar.getDescricao());
+			
+			insert.execute();
 			
 			ResultSet generatedKeys = insert.getGeneratedKeys();
 			if (generatedKeys.next()){
@@ -92,10 +95,11 @@ public class IngredienteDAOImpl implements IngredienteDAO {
 	public void update(Ingrediente ingredienteAtualizar) {
 		Connection conn = null;
 		PreparedStatement update = null;
+
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			update = conn.prepareStatement("UPDATE " + Ingrediente.TABLE + " SET "
-					+ Ingrediente.COL_DESCRICAO + " = ?, " + " WHERE " + Ingrediente.COL_ID + " = ?");
+					+ Ingrediente.COL_DESCRICAO + " = ? " + " WHERE " + Ingrediente.COL_ID + " = ?");
 			update.setString(1, ingredienteAtualizar.getDescricao());
 			update.setLong(2, ingredienteAtualizar.getId());
 			update.execute();

@@ -18,17 +18,15 @@ import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultC
 public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 
 	@Override
-	public Long save(ItemIngrediente itemIngredienteSalvar) {
+	public void save(ItemIngrediente itemIngredienteSalvar) {
 		Connection conn = null;
 		PreparedStatement insert = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			
 			String colunas = DAOUtils.getColunas(ConfigDBMapper.getDefaultConnectionType(), ItemIngrediente.getColunas());
-			
-			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 2, "SEQ_SCR_ITEM_INGREDIENTE");
-			
-			String sql = "INSERT INTO " + ItemIngrediente.TABLE + colunas + " VALUES " + values;
+						
+			String sql = "INSERT INTO " + ItemIngrediente.TABLE + colunas + " VALUES (?, ?, ?)";
 			
 			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(), ItemIngrediente.getColunasArray());
 			
@@ -36,21 +34,19 @@ public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 			insert.setLong(2, itemIngredienteSalvar.getIngredId());
 			insert.setInt(3, itemIngredienteSalvar.getQuantidade());
 			
-			ResultSet generatedKeys = insert.getGeneratedKeys();
-			if (generatedKeys.next()){
-				return generatedKeys.getLong(1);
-			}
+			insert.execute();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
 			DbUtils.closeQuietly(insert);
 			DbUtils.closeQuietly(conn);
 		}
-		return null;
+		
+		//Continuar reparo pois essa classe não possui chave unica, é feita por chave composta.
 	}
 
 	@Override
-	public ItemIngrediente findById(Long id) {
+	public ItemIngrediente findByIds(Long id, Long id2) {
 		Connection conn = null;
 		PreparedStatement find = null;
 		ItemIngrediente ingrediente = null;

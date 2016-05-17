@@ -6,14 +6,14 @@ import br.com.fatec.sistemarestaurante.api.entity.ItemIngrediente;
 
 public interface ItemIngredienteDAO {
 
-	Long save(ItemIngrediente itemIngredienteSalvar);
-
-	ItemIngrediente findById(Long id);
+	void save(ItemIngrediente itemIngredienteSalvar);
 
 	void delete(Long id);
 
 	List<ItemIngrediente> findAll();
 
 	void update(ItemIngrediente itemIngredienteAtualizar);
+
+	ItemIngrediente findByIds(Long id, Long id2);
 
 }

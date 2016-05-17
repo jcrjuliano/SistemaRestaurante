@@ -42,14 +42,12 @@ public class ItemIngrediente {
 		this.quantidade = quantidade;
 	}
 	
-	
-	public static List<String> getColunas(){
+	public static List<String> getColunas() {
 		return Lists.newArrayList(COL_PROD_ID, COL_INGRED_ID, COL_QUANTIDADE);
 	}
-	
-	public static String[] getColunasArray(){
-		return new String[] {COL_PROD_ID, COL_INGRED_ID, COL_QUANTIDADE};
+
+	public static String[] getColunasArray() {
+		return new String[] { COL_PROD_ID, COL_INGRED_ID, COL_QUANTIDADE};
 	}
-	
 
 }

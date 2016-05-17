@@ -8,10 +8,11 @@ import org.junit.Test;
 
 import br.com.fatec.sistemarestaurante.api.dao.PedidoDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Pedido;
+import br.com.fatec.sistemarestaurante.test.commons.TestBase;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 
-public class PedidoDAOTest {
+public class PedidoDAOTest extends TestBase {
 	
 	private PedidoDAO dao;
 	
