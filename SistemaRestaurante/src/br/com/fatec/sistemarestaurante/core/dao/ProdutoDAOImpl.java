@@ -26,7 +26,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 			
 			String colunas = DAOUtils.getColunas(ConfigDBMapper.getDefaultConnectionType(), Produto.getColunas());
 			
-			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 2, "SEQ_SCR_PRODUTO");
+			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 3, "SEQ_SCR_PRODUTO");
 			
 			String sql = "INSERT INTO " + Produto.TABLE + colunas + " VALUES " + values;
 			
@@ -34,7 +34,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 			insert.setString(1, produtoSalvar.getDescricao());
 			insert.setString(2, produtoSalvar.getStatus());
 			insert.setDouble(3, produtoSalvar.getPreco());
-			
+			insert.execute();
 			ResultSet generatedKeys = insert.getGeneratedKeys();
 			if (generatedKeys.next()){
 				return generatedKeys.getLong(1);
@@ -55,8 +55,8 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 		Produto produto = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "SELECT * FROM " + Produto.TABLE + " WHERE "
-					+ Produto.COL_DESCRICAO + " = ?" + Produto.COL_STATUS + " = ?" + Produto.COL_PRECO + " = ?" + Produto.COL_ID + " = ?";
+			String sql = "SELECT * FROM " + Produto.TABLE + " WHERE " +
+					Produto.COL_ID + " = ?";
 			find = conn.prepareStatement(sql);
 			find.setLong(1, id);
 			ResultSet rs = find.executeQuery();
@@ -96,11 +96,12 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			update = conn.prepareStatement("UPDATE " + Produto.TABLE + " SET "
-					+ Produto.COL_DESCRICAO + " = ?, " +  Produto.COL_STATUS + " = ?, " + Produto.COL_PRECO + " = ?, " + "WHERE " + Produto.COL_ID);
+					+ Produto.COL_DESCRICAO + " = ?, " +  Produto.COL_STATUS + " = ?, " + Produto.COL_PRECO + " = ? " + " WHERE " + Produto.COL_ID + " = ?");
 					
 			update.setString(1, produtoAtualizar.getDescricao());
 			update.setString(2, produtoAtualizar.getStatus());
 			update.setDouble(3, produtoAtualizar.getPreco());
+			update.setLong(4, produtoAtualizar.getId());
 			update.execute();
 			
 		} catch (Exception e) {
@@ -133,6 +134,7 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 	
 	private Produto buildProduto(ResultSet rs) throws SQLException {
 		Produto produto = new Produto();
+		produto.setId(rs.getLong(Produto.COL_ID));
 		produto.setDescricao(rs.getString(Produto.COL_DESCRICAO));
 		produto.setStatus(rs.getString(Produto.COL_STATUS));
 		produto.setPreco(rs.getDouble(Produto.COL_PRECO));

@@ -3,7 +3,6 @@ package br.com.fatec.sistemarestaurante.test.dao;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;

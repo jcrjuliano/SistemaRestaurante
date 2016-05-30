@@ -10,13 +10,23 @@ import org.apache.commons.dbutils.DbUtils;
 
 import com.google.common.collect.Lists;
 
+import br.com.fatec.sistemarestaurante.api.dao.IngredienteDAO;
 import br.com.fatec.sistemarestaurante.api.dao.ItemIngredienteDAO;
+import br.com.fatec.sistemarestaurante.api.dao.ProdutoDAO;
 import br.com.fatec.sistemarestaurante.api.entity.ItemIngrediente;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
 import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
 
 public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 
+	ProdutoDAO produtoDAO;
+	IngredienteDAO ingredienteDAO;
+	
+	public ItemIngredienteDAOImpl() {
+			this.produtoDAO = ImplFinder.getImpl(ProdutoDAO.class);
+			this.ingredienteDAO = ImplFinder.getImpl(IngredienteDAO.class);
+	}
 	@Override
 	public void save(ItemIngrediente itemIngredienteSalvar) {
 		Connection conn = null;
@@ -30,8 +40,8 @@ public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 			
 			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(), ItemIngrediente.getColunasArray());
 			
-			insert.setLong(1, itemIngredienteSalvar.getProdId());
-			insert.setLong(2, itemIngredienteSalvar.getIngredId());
+			insert.setLong(1, itemIngredienteSalvar.getProduto().getId());
+			insert.setLong(2, itemIngredienteSalvar.getIngrediente().getId());
 			insert.setInt(3, itemIngredienteSalvar.getQuantidade());
 			
 			insert.execute();
@@ -46,16 +56,17 @@ public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 	}
 
 	@Override
-	public ItemIngrediente findByIds(Long id, Long id2) {
+	public ItemIngrediente findByIds(Long idProduto, Long idIngrediente) {
 		Connection conn = null;
 		PreparedStatement find = null;
 		ItemIngrediente ingrediente = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			String sql = "SELECT * FROM " + ItemIngrediente.TABLE + " WHERE "
-					+ ItemIngrediente.COL_PROD_ID + " = ?" + ItemIngrediente.COL_INGRED_ID + " = ?" + ItemIngrediente.COL_QUANTIDADE + " = ?";
+					+ ItemIngrediente.COL_PROD_ID + " = ? and " + ItemIngrediente.COL_INGRED_ID + " = ?";
 			find = conn.prepareStatement(sql);
-			find.setLong(1, id);
+			find.setLong(1, idProduto);
+			find.setLong(2, idIngrediente);
 			ResultSet rs = find.executeQuery();
 			if (rs.next()) {
 				ingrediente = this.buildItemIngrediente(rs);
@@ -93,10 +104,10 @@ public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			update = conn.prepareStatement("UPDATE " + ItemIngrediente.TABLE + " SET "
-					+ ItemIngrediente.COL_QUANTIDADE + " = ?, " + " WHERE " + ItemIngrediente.COL_PROD_ID + " = ?" + ItemIngrediente.COL_INGRED_ID + " = ?");
+					+ ItemIngrediente.COL_QUANTIDADE + " = ? " + " WHERE " + ItemIngrediente.COL_PROD_ID + " = ? and " + ItemIngrediente.COL_INGRED_ID + " = ?");
 			update.setInt(1, itemIngredienteAtualizar.getQuantidade());
-			update.setLong(2, itemIngredienteAtualizar.getProdId());
-			update.setLong(3, itemIngredienteAtualizar.getIngredId());
+			update.setLong(2, itemIngredienteAtualizar.getProduto().getId());
+			update.setLong(3, itemIngredienteAtualizar.getIngrediente().getId());
 			update.execute();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -108,14 +119,15 @@ public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(Long prodId, Long ingredId) {
 		Connection conn = null;
 		PreparedStatement delete = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "DELETE FROM " + ItemIngrediente.TABLE + " WHERE ID = ?";
+			String sql = "DELETE FROM " + ItemIngrediente.TABLE + " WHERE "+ ItemIngrediente.COL_PROD_ID +" = ? and " + ItemIngrediente.COL_INGRED_ID + " = ?";
 			delete = conn.prepareStatement(sql);
-			delete.setLong(1, id);
+			delete.setLong(1, prodId);
+			delete.setLong(2, ingredId);
 			delete.execute();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -128,8 +140,8 @@ public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 	
 	private ItemIngrediente buildItemIngrediente(ResultSet rs) throws SQLException {
 		ItemIngrediente itemIngrediente = new ItemIngrediente();
-		itemIngrediente.setProdId(rs.getLong(ItemIngrediente.COL_PROD_ID));
-		itemIngrediente.setIngredId(rs.getLong(ItemIngrediente.COL_INGRED_ID));
+		itemIngrediente.setProduto(this.produtoDAO.findById(rs.getLong(ItemIngrediente.COL_PROD_ID)));
+		itemIngrediente.setIngrediente(this.ingredienteDAO.findById(rs.getLong(ItemIngrediente.COL_INGRED_ID)));
 		itemIngrediente.setQuantidade(rs.getInt(ItemIngrediente.COL_QUANTIDADE));
 		return itemIngrediente;
 	}
@@ -140,6 +152,23 @@ public class ItemIngredienteDAOImpl implements ItemIngredienteDAO {
 			ingredientes.add(this.buildItemIngrediente(rs));
 		}
 		return ingredientes;
+	}
+	@Override
+	public List<ItemIngrediente> findByProduto(Long id) {
+		Connection conn = null;
+		PreparedStatement findByProg = null;
+		try {
+			conn = ConfigDBMapper.getDefaultConnection();
+			findByProg = conn.prepareStatement("SELECT * FROM " + ItemIngrediente.TABLE + " WHERE " + ItemIngrediente.COL_PROD_ID + " = ?");
+			findByProg.setLong(1, id);
+			ResultSet rs = findByProg.executeQuery();
+			return this.buildItemIngredientes(rs);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			DbUtils.closeQuietly(conn);
+			DbUtils.closeQuietly(findByProg);
+		}
 	}
 
 

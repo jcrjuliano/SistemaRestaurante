@@ -33,7 +33,7 @@
 
 	<changeSet id="040" author="laleska.santos">
 		<createTable tableName="SCR_ITEM_PROD">
-			<column name="PROD_ID" type="BIGINT" />
+			<column name="ID" type="BIGINT" />
 			<column name="ID_PRODUTO" type="BIGINT" />
 			<column name="ID_PEDIDO" type="BIGINT" />
 			<column name="PRECO" type="DOUBLE" />
@@ -43,7 +43,7 @@
 	<changeSet id="050" author="laleska.santos">
 		<addPrimaryKey columnNames="ID" tableName="SCR_INGREDIENTE" />
 		<addPrimaryKey columnNames="ID" tableName="SCR_PRODUTO" />
-		<addPrimaryKey columnNames="PROD_ID" tableName="SCR_ITEM_PROD" />
+		<addPrimaryKey columnNames="ID" tableName="SCR_ITEM_PROD" />
 	</changeSet>
 
 

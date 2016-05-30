@@ -1,5 +1,7 @@
 package br.com.fatec.sistemarestaurante.core.dao;
 
+import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,14 +10,21 @@ import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
 
-import com.google.common.collect.Lists;
-
 import br.com.fatec.sistemarestaurante.api.dao.ListaPedidosDAO;
+import br.com.fatec.sistemarestaurante.api.dao.PedidoDAO;
 import br.com.fatec.sistemarestaurante.api.entity.ListaPedidos;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
-import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
+
+import com.google.common.collect.Lists;
 
 public class ListaPedidosDAOImpl implements ListaPedidosDAO {
+	
+	private PedidoDAO pedidoDao;
+	
+	public ListaPedidosDAOImpl(){
+		pedidoDao = ImplFinder.getImpl(PedidoDAO.class);
+	}
 
 	@Override
 	public Long save(ListaPedidos listaPedidosSalvar) {
@@ -32,9 +41,9 @@ public class ListaPedidosDAOImpl implements ListaPedidosDAO {
 			
 			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(), ListaPedidos.getColunasArray());
 			
-			insert.setDouble(1, listaPedidosSalvar.getIdPedido());
+			insert.setLong(1, listaPedidosSalvar.getPedido().getId());
 			insert.setString(2, listaPedidosSalvar.getStatus());
-			
+			insert.execute();
 			ResultSet generatedKeys = insert.getGeneratedKeys();
 			if (generatedKeys.next()){
 				return generatedKeys.getLong(1);
@@ -96,8 +105,8 @@ public class ListaPedidosDAOImpl implements ListaPedidosDAO {
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			update = conn.prepareStatement("UPDATE " + ListaPedidos.TABLE + " SET "
-					+ ListaPedidos.COL_ID_PEDIDO + " = ?, " + ListaPedidos.COL_STATUS + " = ?, " + " WHERE " + ListaPedidos.COL_ID + " = ?");
-			update.setLong(1, listaPedidosAtualizar.getIdPedido());
+					+ ListaPedidos.COL_ID_PEDIDO + " = ?, " + ListaPedidos.COL_STATUS + " = ? " + " WHERE " + ListaPedidos.COL_ID + " = ?");
+			update.setLong(1, listaPedidosAtualizar.getPedido().getId());
 			update.setString(2, listaPedidosAtualizar.getStatus());
 			update.setLong(3, listaPedidosAtualizar.getId());
 			update.execute();
@@ -132,7 +141,7 @@ public class ListaPedidosDAOImpl implements ListaPedidosDAO {
 	private ListaPedidos buildListaPedidos(ResultSet rs) throws SQLException {
 		ListaPedidos listaPedidos = new ListaPedidos();
 		listaPedidos.setId(rs.getLong(listaPedidos.COL_ID));
-		listaPedidos.setIdPedido(rs.getLong(listaPedidos.COL_ID_PEDIDO));
+		listaPedidos.setPedido(pedidoDao.findById(rs.getLong(listaPedidos.COL_ID_PEDIDO)));
 		listaPedidos.setStatus(rs.getString(listaPedidos.COL_STATUS));
 		return listaPedidos;
 	}

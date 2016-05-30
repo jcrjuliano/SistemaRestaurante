@@ -4,18 +4,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
 
 import com.google.common.collect.Lists;
 
+import br.com.fatec.sistemarestaurante.api.dao.ComandaDAO;
+import br.com.fatec.sistemarestaurante.api.dao.GarcomDAO;
 import br.com.fatec.sistemarestaurante.api.dao.PedidoDAO;
 import br.com.fatec.sistemarestaurante.api.entity.Pedido;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
 import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
 
 public class PedidoDAOImpl implements PedidoDAO {
+	
+	private ComandaDAO comandaDAO;
+	private GarcomDAO garcomDAO;
+	
+	public PedidoDAOImpl(){
+		this.comandaDAO = ImplFinder.getImpl(ComandaDAO.class);
+		this.garcomDAO = ImplFinder.getImpl(GarcomDAO.class);
+	}
 
 	@Override
 	public Long save(Pedido pedidoSalvar) {
@@ -26,18 +38,18 @@ public class PedidoDAOImpl implements PedidoDAO {
 			
 			String colunas = DAOUtils.getColunas(ConfigDBMapper.getDefaultConnectionType(), Pedido.getColunas());
 			
-			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 2, "SEQ_SCR_PEDIDO");
+			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 5, "SEQ_SCR_PEDIDO");
 			
 			String sql = "INSERT INTO " + Pedido.TABLE + colunas + " VALUES " + values;
 			
 			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(), Pedido.getColunasArray());
 			
 			insert.setString(1, pedidoSalvar.getStatus());
-			insert.setString(2, pedidoSalvar.getDataAbertura());
+			insert.setLong(2, pedidoSalvar.getDataAbertura().getTime());
 			insert.setDouble(3, pedidoSalvar.getValorTotal());
-			insert.setLong(4, pedidoSalvar.getIdComanda());
-			insert.setLong(5, pedidoSalvar.getIdGarcom());
-			
+			insert.setLong(4, pedidoSalvar.getComanda().getId());
+			insert.setLong(5, pedidoSalvar.getGarcom().getId());
+			insert.execute();
 			ResultSet generatedKeys = insert.getGeneratedKeys();
 			if (generatedKeys.next()){
 				return generatedKeys.getLong(1);
@@ -59,8 +71,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			String sql = "SELECT * FROM " + Pedido.TABLE + " WHERE "
-					+ Pedido.COL_STATUS+ " = ?" + Pedido.COL_DATA_ABERTURA + " = ?" + Pedido.COL_VALOR_TOTAL + " = ?" + Pedido.COL_ID_COMANDA + " = ?"
-					+ Pedido.COL_ID_GARCOM + " = ?";
+					+ Pedido.COL_ID + " = ?";
 			find = conn.prepareStatement(sql);
 			find.setLong(1, id);
 			ResultSet rs = find.executeQuery();
@@ -100,12 +111,13 @@ public class PedidoDAOImpl implements PedidoDAO {
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
 			update = conn.prepareStatement("UPDATE " + Pedido.TABLE + " SET "
-					+ Pedido.COL_STATUS + " = ?, " +  Pedido.COL_DATA_ABERTURA + " = ?, " + Pedido.COL_VALOR_TOTAL + " = ?, " + "WHERE " + Pedido.COL_ID_COMANDA + " = ?" + Pedido.COL_ID_GARCOM+ " = ?");
+					+ Pedido.COL_STATUS + " = ?, " +  Pedido.COL_DATA_ABERTURA + " = ?, " + Pedido.COL_VALOR_TOTAL + " = ?, " + Pedido.COL_ID_COMANDA + " = ?, " + Pedido.COL_ID_GARCOM + " = ? WHERE " + Pedido.COL_ID + " = ?");
 			update.setString(1, pedidoAtualizar.getStatus());
-			update.setString(2, pedidoAtualizar.getDataAbertura());
+			update.setLong(2, pedidoAtualizar.getDataAbertura().getTime());
 			update.setDouble(3, pedidoAtualizar.getValorTotal());
-			update.setLong(4, pedidoAtualizar.getIdComanda());
-			update.setLong(5, pedidoAtualizar.getIdGarcom());
+			update.setLong(4, pedidoAtualizar.getComanda().getId());
+			update.setLong(5, pedidoAtualizar.getGarcom().getId());
+			update.setLong(6, pedidoAtualizar.getId());
 			update.execute();
 			
 		} catch (Exception e) {
@@ -123,7 +135,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 		PreparedStatement delete = null;
 		try {
 			conn = ConfigDBMapper.getDefaultConnection();
-			String sql = "DELETE FROM " + Pedido.TABLE + " WHERE ID = ?";
+			String sql = "DELETE FROM " + Pedido.TABLE + " WHERE " + Pedido.COL_ID + " = ?";
 			delete = conn.prepareStatement(sql);
 			delete.setLong(1, id);
 			delete.execute();
@@ -138,10 +150,11 @@ public class PedidoDAOImpl implements PedidoDAO {
 	
 	private Pedido buildPedido(ResultSet rs) throws SQLException {
 		Pedido pedido = new Pedido();
-		pedido.setIdComanda(rs.getLong(Pedido.COL_ID_COMANDA));
-		pedido.setIdGarcom(rs.getLong(Pedido.COL_ID_GARCOM));
+		pedido.setId(rs.getLong(Pedido.COL_ID));
+		pedido.setComanda(this.comandaDAO.findById(rs.getLong(Pedido.COL_ID_COMANDA)));
+		pedido.setGarcom(this.garcomDAO.findById(rs.getLong(Pedido.COL_ID_GARCOM)));
 		pedido.setStatus(rs.getString(Pedido.COL_STATUS));
-		pedido.setDataAbertura(rs.getString(Pedido.COL_DATA_ABERTURA));
+		pedido.setDataAbertura(new Date(rs.getLong(Pedido.COL_DATA_ABERTURA)));
 		pedido.setValorTotal(rs.getDouble(Pedido.COL_VALOR_TOTAL));
 		return pedido;
 	}

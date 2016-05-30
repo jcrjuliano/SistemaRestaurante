@@ -14,13 +14,27 @@ public class ItemProd {
 	public static final String COL_PRECO = "PRECO";
 	
 	private Long id;
-	private Long idProduto;
-	private Long idPedido;
+	private Produto produto;
+	private Pedido pedido;
 	private Double preco;
-	public ItemProd(Long id, Long idProduto, Long idPedido, Double preco) {
+
+	
+	public Produto getProduto() {
+		return produto;
+	}
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+	public Pedido getPedido() {
+		return pedido;
+	}
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	public ItemProd(Long id, Produto produto, Pedido pedido, Double preco) {
 		this.id = id;
-		this.idProduto = idProduto;
-		this.idPedido = idPedido;
+		this.produto = produto;
+		this.pedido = pedido;
 		this.preco = preco;
 	}
 	public Long getId() {
@@ -29,18 +43,8 @@ public class ItemProd {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getIdProduto() {
-		return idProduto;
-	}
-	public void setIdProduto(Long idProduto) {
-		this.idProduto = idProduto;
-	}
-	public Long getIdPedido() {
-		return idPedido;
-	}
-	public void setIdPedido(Long idPedido) {
-		this.idPedido = idPedido;
-	}
+
+
 	public Double getPreco() {
 		return preco;
 	}

@@ -11,14 +11,23 @@ public class ListaPedidos {
 	public static final String COL_STATUS = "STATUS";
 	
 	private Long id;
-	private Long idPedido;
+	private Pedido Pedido;
 	private String status;
-	public ListaPedidos(Long id, Long idPedido, String status) {
+	
+	
+	public Pedido getPedido() {
+		return Pedido;
+	}
+	public void setPedido(Pedido pedido) {
+		Pedido = pedido;
+	}
+	public ListaPedidos(Long id,
+			br.com.fatec.sistemarestaurante.api.entity.Pedido pedido,
+			String status) {
 		this.id = id;
-		this.idPedido = idPedido;
+		Pedido = pedido;
 		this.status = status;
 	}
-	
 	public ListaPedidos(){
 		
 	}
@@ -28,12 +37,7 @@ public class ListaPedidos {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getIdPedido() {
-		return idPedido;
-	}
-	public void setIdPedido(Long idPedido) {
-		this.idPedido = idPedido;
-	}
+
 	public String getStatus() {
 		return status;
 	}

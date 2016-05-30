@@ -10,12 +10,28 @@ import org.apache.commons.dbutils.DbUtils;
 
 import com.google.common.collect.Lists;
 
+import br.com.fatec.sistemarestaurante.api.dao.ComandaDAO;
+import br.com.fatec.sistemarestaurante.api.dao.GarcomDAO;
 import br.com.fatec.sistemarestaurante.api.dao.ItemProdDAO;
+import br.com.fatec.sistemarestaurante.api.dao.PedidoDAO;
+import br.com.fatec.sistemarestaurante.api.dao.ProdutoDAO;
 import br.com.fatec.sistemarestaurante.api.entity.ItemProd;
+import br.com.fatec.sistemarestaurante.api.entity.Pedido;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
 import static br.com.spektro.minispring.core.dbmapper.ConfigDBMapper.getDefaultConnectionType;
 
 public class ItemProdDAOImpl implements ItemProdDAO {
+	
+	private ProdutoDAO daoProduto;
+	private PedidoDAO daoPedido;
+
+	public ItemProdDAOImpl(){
+		this.daoProduto = ImplFinder.getImpl(ProdutoDAO.class);
+		this.daoPedido = ImplFinder.getImpl(PedidoDAO.class);
+
+	}
+	
 
 	@Override
 	public Long save(ItemProd itemProdSalvar) {
@@ -26,16 +42,16 @@ public class ItemProdDAOImpl implements ItemProdDAO {
 			
 			String colunas = DAOUtils.getColunas(ConfigDBMapper.getDefaultConnectionType(), ItemProd.getColunas());
 			
-			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 2, "SEQ_SCR_ITEM_PROD");
+			String values = DAOUtils.completarClausulaValues(getDefaultConnectionType(), 3, "SEQ_SCR_ITEM_PROD");
 			
 			String sql = "INSERT INTO " + ItemProd.TABLE + colunas + " VALUES " + values;
 			
 			insert = DAOUtils.criarStatment(sql, conn, getDefaultConnectionType(), ItemProd.getColunasArray());
 			
-			insert.setLong(1, itemProdSalvar.getIdProduto());
-			insert.setLong(2, itemProdSalvar.getIdPedido());
+			insert.setLong(1, itemProdSalvar.getProduto().getId());
+			insert.setLong(2, itemProdSalvar.getPedido().getId());
 			insert.setDouble(3, itemProdSalvar.getPreco());
-			
+			insert.execute();
 			ResultSet generatedKeys = insert.getGeneratedKeys();
 			if (generatedKeys.next()){
 				return generatedKeys.getLong(1);
@@ -100,9 +116,11 @@ public class ItemProdDAOImpl implements ItemProdDAO {
 					+ ItemProd.COL_ID_PRODUTO + " = ?, " + ItemProd.COL_ID_PEDIDO + " = ?, " + ItemProd.COL_PRECO + " = ? " 
 					+ " WHERE " + ItemProd.COL_ID + " = ?");
 			
-			update.setDouble(1, itemProdAtualizar.getPreco());
-			update.setLong(2, itemProdAtualizar.getIdPedido());
-			update.setLong(3, itemProdAtualizar.getIdProduto());
+			
+			update.setLong(1, itemProdAtualizar.getProduto().getId());
+			update.setLong(2, itemProdAtualizar.getPedido().getId());
+			update.setDouble(3, itemProdAtualizar.getPreco());
+			update.setLong(4, itemProdAtualizar.getId());
 			update.execute();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -134,8 +152,8 @@ public class ItemProdDAOImpl implements ItemProdDAO {
 	
 	private ItemProd buildItemProd(ResultSet rs) throws SQLException {
 		ItemProd itemProd = new ItemProd();
-		itemProd.setIdPedido(rs.getLong(ItemProd.COL_ID_PEDIDO));
-		itemProd.setIdProduto(rs.getLong(ItemProd.COL_ID_PRODUTO));
+		itemProd.setPedido(this.daoPedido.findById(rs.getLong(ItemProd.COL_ID_PEDIDO)));
+		itemProd.setProduto(this.daoProduto.findById(rs.getLong(ItemProd.COL_ID_PRODUTO)));
 		itemProd.setPreco(rs.getDouble(ItemProd.COL_PRECO));
 		return itemProd;
 	}

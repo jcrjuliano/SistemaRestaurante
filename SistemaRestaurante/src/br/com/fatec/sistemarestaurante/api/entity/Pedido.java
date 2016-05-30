@@ -1,5 +1,6 @@
 package br.com.fatec.sistemarestaurante.api.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -16,19 +17,19 @@ public class Pedido {
 	
 	private Long id;
 	private String status;
-	private String dataAbertura;
+	private Date dataAbertura;
 	private Double valorTotal;
-	private Long idComanda;
-	private Long idGarcom;
+	private Comanda comanda;
+	private Garcom garcom;
 	
-	public Pedido(Long id, String status, String dataAbertura,
-			Double valorTotal, Long idComanda, Long idGarcom) {
+	public Pedido(Long id, String status, Date dataAbertura,
+			Double valorTotal, Comanda comanda, Garcom garcom) {
 		this.id = id;
 		this.status = status;
 		this.dataAbertura = dataAbertura;
 		this.valorTotal = valorTotal;
-		this.idComanda = idComanda;
-		this.idGarcom = idGarcom;
+		this.comanda = comanda;
+		this.garcom = garcom;
 	}
 	
 	public Pedido(){
@@ -50,11 +51,11 @@ public class Pedido {
 		this.status = status;
 	}
 
-	public String getDataAbertura() {
+	public Date getDataAbertura() {
 		return dataAbertura;
 	}
 
-	public void setDataAbertura(String dataAbertura) {
+	public void setDataAbertura(Date dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
 
@@ -65,23 +66,23 @@ public class Pedido {
 	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-
-	public Long getIdComanda() {
-		return idComanda;
-	}
-
-	public void setIdComanda(Long idComanda) {
-		this.idComanda = idComanda;
-	}
-
-	public Long getIdGarcom() {
-		return idGarcom;
-	}
-
-	public void setIdGarcom(Long idGarcom) {
-		this.idGarcom = idGarcom;
-	}
 	
+	public Comanda getComanda() {
+		return comanda;
+	}
+
+	public void setComanda(Comanda comanda) {
+		this.comanda = comanda;
+	}
+
+	public Garcom getGarcom() {
+		return garcom;
+	}
+
+	public void setGarcom(Garcom garcom) {
+		this.garcom = garcom;
+	}
+
 	public static List<String> getColunas() {
 		return Lists.newArrayList(COL_ID, 
 								COL_STATUS, 

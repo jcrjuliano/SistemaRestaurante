@@ -37,7 +37,7 @@ public class ProdutoDAOTest extends TestBase {
 		Assert.assertNotNull(produtoSalvo);
 		Assert.assertEquals("Coca-cola", produtoSalvo.getDescricao());
 		Assert.assertEquals("Disponivel", produtoSalvo.getStatus());
-		Assert.assertEquals(8,50, produtoSalvo.getPreco());
+		Assert.assertEquals(new Double(8.50), produtoSalvo.getPreco());
 		
 		
 	}
@@ -65,7 +65,7 @@ public class ProdutoDAOTest extends TestBase {
 		Assert.assertNotNull(produtoAtualizado);
 		Assert.assertEquals("Fanta", produtoAtualizado .getDescricao());
 		Assert.assertEquals("Indisponivel", produtoAtualizado .getStatus());
-		Assert.assertEquals(8,00, produtoAtualizado.getPreco());
+		Assert.assertEquals(new Double(8.00), produtoAtualizado.getPreco());
 	}
 	
 	@Test
@@ -104,13 +104,13 @@ public class ProdutoDAOTest extends TestBase {
 		List<Produto> encontrados = this.dao.findAll();
 		
 		Assert.assertEquals(2, encontrados.size());
-		Assert.assertEquals("Coca-cola", encontrados.get(0).getDescricao());
+		Assert.assertEquals("Coca-Cola", encontrados.get(0).getDescricao());
 		Assert.assertEquals("Disponivel", encontrados.get(0).getStatus());
-		Assert.assertEquals(8,50, encontrados.get(0).getPreco());
+		Assert.assertEquals(new Double(8.50), encontrados.get(0).getPreco());
 		
 		Assert.assertEquals("Fanta", encontrados.get(1).getDescricao());
 		Assert.assertEquals("Disponivel", encontrados.get(1).getStatus());
-		Assert.assertEquals(8,00, encontrados.get(1).getPreco());
+		Assert.assertEquals(new Double(8.00), encontrados.get(1).getPreco());
 		
 	}
 }

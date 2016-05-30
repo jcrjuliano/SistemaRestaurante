@@ -11,30 +11,37 @@ public class ItemIngrediente {
 	public static final String COL_INGRED_ID = "INGRED_ID";
 	public static final String COL_QUANTIDADE = "QUANTIDADE";
 	
-	private Long prodId;
-	private Long ingredId;
+	private Produto produto;
+	private Ingrediente ingrediente;
 	private Integer quantidade;
-	public ItemIngrediente(Long prodId, Long ingredId, Integer quantidade) {
-		this.prodId = prodId;
-		this.ingredId = ingredId;
+	
+	public ItemIngrediente(Produto produto, Ingrediente ingrediente,
+			Integer quantidade) {
+		this.produto = produto;
+		this.ingrediente = ingrediente;
 		this.quantidade = quantidade;
 	}
 	
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Ingrediente getIngrediente() {
+		return ingrediente;
+	}
+
+	public void setIngrediente(Ingrediente ingrediente) {
+		this.ingrediente = ingrediente;
+	}
+
 	public ItemIngrediente(){
 		
 	}
-	public Long getProdId() {
-		return prodId;
-	}
-	public void setProdId(Long prodId) {
-		this.prodId = prodId;
-	}
-	public Long getIngredId() {
-		return ingredId;
-	}
-	public void setIngredId(Long ingredId) {
-		this.ingredId = ingredId;
-	}
+	
 	public Integer getQuantidade() {
 		return quantidade;
 	}
