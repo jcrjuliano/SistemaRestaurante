@@ -6,198 +6,120 @@
 	http://www.liquibase.org/xml/ns/dbchangelog-ext
 	http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-	<changeSet id="010" author="laleska.piaunios">
-		<createTable tableName="SCR_INGREDIENTE">
+	<changeSet id="001" author="carlos.oliveira">
+		<createTable tableName="PROJETO_USUARIO" >
 			<column name="ID" type="BIGINT" />
+			<column name="NOME" type="VARCHAR(255)" />
+			<column name="SENHA" type="VARCHAR(50)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="002" author="carlos.oliveira">
+		<createTable tableName="PROJETO_GRUPO_PAPEL" >
+			<column name="ID" type="BIGINT" />
+			<column name="NOME" type="VARCHAR(255)" />
 			<column name="DESCRICAO" type="VARCHAR(255)" />
 		</createTable>
 	</changeSet>
 
-	<changeSet id="020" author="laleska.santos">
-		<createTable tableName="SCR_PRODUTO">
+	<changeSet id="003" author="carlos.oliveira">
+		<createTable tableName="PROJETO_PAPEL" >
 			<column name="ID" type="BIGINT" />
+			<column name="NOME" type="VARCHAR(255)" />
 			<column name="DESCRICAO" type="VARCHAR(255)" />
-			<column name="STATUS" type="VARCHAR(255)" />
-			<column name="PRECO" type="DOUBLE" />
+			<column name="GRUPO_ID" type="BIGINT" />
 		</createTable>
 	</changeSet>
 
-	<changeSet id="030" author="laleska.santos">
-		<createTable tableName="SCR_ITEM_INGREDIENTE">
-			<column name="ID" type="BIGINT" />
-			<column name="PROD_ID" type="BIGINT" />
-			<column name="INGRED_ID" type="BIGINT" />
-			<column name="QUANTIDADE" type="INTEGER" />
-		</createTable>
+	<changeSet id="004" author="carlos.oliveira">
+		<addPrimaryKey columnNames="ID" tableName="PROJETO_USUARIO" />
+		<addPrimaryKey columnNames="ID" tableName="PROJETO_GRUPO_PAPEL" />
+		<addPrimaryKey columnNames="ID" tableName="PROJETO_PAPEL" />
 	</changeSet>
 
-	<changeSet id="040" author="laleska.santos">
-		<createTable tableName="SCR_ITEM_PROD">
-			<column name="ID" type="BIGINT" />
-			<column name="ID_PRODUTO" type="BIGINT" />
-			<column name="ID_PEDIDO" type="BIGINT" />
-			<column name="PRECO" type="DOUBLE" />
-		</createTable>
+	<changeSet author="carlos.oliveira" id="005" dbms="oracle, hsqldb, postgresql">
+    	<createSequence 
+            incrementBy="1"
+            sequenceName="SEQ_PROJETO_PAPEL"
+            startValue="1" />
+            
+   		<createSequence 
+            incrementBy="1"
+            sequenceName="SEQ_PROJETO_GRUPO_PAPEL"
+            startValue="1" />
+            
+   		<createSequence 
+            incrementBy="1"
+            sequenceName="SEQ_PROJETO_USUARIO"
+            startValue="1" />
 	</changeSet>
 
-	<changeSet id="050" author="laleska.santos">
-		<addPrimaryKey columnNames="ID" tableName="SCR_INGREDIENTE" />
-		<addPrimaryKey columnNames="ID" tableName="SCR_PRODUTO" />
-		<addPrimaryKey columnNames="ID" tableName="SCR_ITEM_PROD" />
-	</changeSet>
-
-
-	<changeSet id="060" author="juliano.cesar">
-		<createTable tableName="SCR_PEDIDO">
-			<column name="ID" type="BIGINT" />
-			<column name="STATUS" type="VARCHAR(255)" />
-			<column name="DATA_ABERTURA" type="BIGINT" />
-			<column name="VALOR_TOTAL" type="DOUBLE" />
-			<column name="ID_COMANDA" type="BIGINT" />
-			<column name="ID_GARCOM" type="BIGINT" />
-		</createTable>
-	</changeSet>
-
-	<changeSet id="070" author="juliano.cesar">
-		<createTable tableName="SCR_LISTA_PEDIDOS">
-			<column name="ID" type="BIGINT" />
-			<column name="ID_PEDIDO" type="BIGINT" />
-			<column name="STATUS" type="VARCHAR(255)" />
-		</createTable>
-	</changeSet>
-
-	<changeSet id="080" author="juliano.cesar">
-		<createTable tableName="SCR_COMANDA">
-			<column name="ID" type="BIGINT" />
-			<column name="VALOR_TOTAL" type="DOUBLE" />
-			<column name="DATA_ABERTURA" type="BIGINT" />
-			<column name="DATA_FECHAMENTO" type="BIGINT" />
-		</createTable>
-	</changeSet>
-
-	<changeSet id="090" author="juliano.cesar">
-		<createTable tableName="SCR_GARCOM">
-			<column name="ID" type="BIGINT" />
-			<column name="NOME" type="VARCHAR(50)" />
-			<column name="REGISTRO" type="VARCHAR(10)" />
-			<column name="SEXO" type="VARCHAR(10)" />
-			<column name="IDADE" type="NUMBER" />
-		</createTable>
-	</changeSet>
-
-	<changeSet author="laleska.santos" id="100"
-		dbms="oracle, hsqldb, postgresql">
-		<createSequence incrementBy="1" sequenceName="SEQ_SCR_INGREDIENTE"
-			startValue="1" />
-
-		<createSequence incrementBy="1" sequenceName="SEQ_SCR_PRODUTO"
-			startValue="1" />
-
-		<createSequence incrementBy="1" sequenceName="SEQ_SCR_ITEM_INGREDIENTE"
-			startValue="1" />
-
-		<createSequence incrementBy="1" sequenceName="SEQ_SCR_ITEM_PROD"
-			startValue="1" />
-	</changeSet>
-
-	<changeSet author="laleska.santos" id="110" dbms="mysql">
-		<addAutoIncrement tableName="SCR_INGREDIENTE"
-			columnName="ID" columnDataType="bigint" />
-	</changeSet>
-
-	<changeSet author="laleska.santos" id="120" dbms="mysql">
-		<addAutoIncrement tableName="SCR_PRODUTO" columnName="ID"
-			columnDataType="bigint" />
-	</changeSet>
-
-	<changeSet author="laleska.santos" id="130" dbms="mysql">
-		<addAutoIncrement tableName="SCR_ITEM_INGREDIENTE"
-			columnName="ID" columnDataType="bigint" />
-	</changeSet>
-
-	<changeSet author="laleska.santos" id="140" dbms="mysql">
-		<addAutoIncrement tableName="SCR_ITEM_INGREDIENTE"
-			columnName="ID" columnDataType="bigint" />
+	<changeSet author="carlos.oliveira" id="006" dbms="mysql">
+    	<addAutoIncrement tableName="PROJETO_PAPEL" columnName="ID"
+    		columnDataType="bigint" />
 	</changeSet>
 	
-	<changeSet id="150" author="juliano.cesar">
-		<addPrimaryKey columnNames="ID" tableName="SCR_PEDIDO" />
-		<addPrimaryKey columnNames="ID" tableName="SCR_LISTA_PEDIDOS" />
-		<addPrimaryKey columnNames="ID" tableName="SCR_COMANDA" />
-		<addPrimaryKey columnNames="ID" tableName="SCR_GARCOM" />
+	<changeSet author="carlos.oliveira" id="006.1" dbms="mysql">
+    	<addAutoIncrement tableName="PROJETO_GRUPO_PAPEL" columnName="ID"
+    		columnDataType="bigint" />
+	</changeSet>
+	
+	<changeSet author="carlos.oliveira" id="006.2" dbms="mysql">
+    	<addAutoIncrement tableName="PROJETO_USUARIO" columnName="ID"
+    		columnDataType="bigint" />
 	</changeSet>
 
-	<changeSet author="juliano.rosa" id="160"
-		dbms="oracle, hsqldb, postgresql">
-		<createSequence incrementBy="1" sequenceName="SEQ_SCR_PEDIDO"
-			startValue="1" />
-
-		<createSequence incrementBy="1" sequenceName="SEQ_SCR_LISTA_PEDIDOS"
-			startValue="1" />
-
-		<createSequence incrementBy="1" sequenceName="SEQ_SCR_COMANDA"
-			startValue="1" />
-
-		<createSequence incrementBy="1" sequenceName="SEQ_SCR_GARCOM"
-			startValue="1" />
+	<changeSet id="007" author="carlos.oliveira">
+		<addForeignKeyConstraint constraintName="FK_PAPELGRUPO_PAPEL_GRUPO"
+			referencedTableName="PROJETO_GRUPO_PAPEL"
+			referencedColumnNames="ID" baseTableName="PROJETO_PAPEL"
+			baseColumnNames="GRUPO_ID" />
 	</changeSet>
 
-	<changeSet author="juliano.cesar" id="170" dbms="mysql">
-		<addAutoIncrement tableName="SCR_PEDIDO" columnName="ID"
-			columnDataType="bigint" />
+	<changeSet id="008" author="carlos.oliveira">
+		<createTable tableName="PROJETO_USUARIO_PAPEL" >
+			<column name="ID_USUARIO" type="BIGINT" />
+			<column name="ID_PAPEL" type="BIGINT" />
+		</createTable>
 	</changeSet>
 
-	<changeSet author="juliano.cesar" id="180" dbms="mysql">
-		<addAutoIncrement tableName="SCR_LISTA_PEDIDOS"
-			columnName="ID" columnDataType="bigint" />
+	<changeSet id="009" author="carlos.oliveira">
+		<createTable tableName="PROJETO_USUARIO_GRUPO_PAPEL" >
+			<column name="ID_USUARIO" type="BIGINT" />
+			<column name="ID_GRUPO_PAPEL" type="BIGINT" />
+		</createTable>
 	</changeSet>
 
-	<changeSet author="juliano.cesar" id="190" dbms="mysql">
-		<addAutoIncrement tableName="SCR_COMANDA" columnName="ID"
-			columnDataType="bigint" />
+	<changeSet id="010" author="carlos.oliveira">
+		<addForeignKeyConstraint
+			constraintName="FK_USUARIOPAPEL_USUARIO"
+			referencedTableName="PROJETO_USUARIO"
+			referencedColumnNames="ID" 
+			baseTableName="PROJETO_USUARIO_PAPEL"
+			baseColumnNames="ID_USUARIO" />
+			
+		<addForeignKeyConstraint
+			constraintName="FK_USUARIOPAPEL_PAPEL"
+			referencedTableName="PROJETO_PAPEL"
+			referencedColumnNames="ID" 
+			baseTableName="PROJETO_USUARIO_PAPEL"
+			baseColumnNames="ID_PAPEL" />
 	</changeSet>
-
-	<changeSet author="juliano.cesar" id="200" dbms="mysql">
-		<addAutoIncrement tableName="SCR_GARCOM" columnName="ID"
-			columnDataType="bigint" />
+	
+	<changeSet id="011" author="carlos.oliveira">
+		<addForeignKeyConstraint
+			constraintName="FK_USUARIOGRUPOPAPEL_USUARIO"
+			referencedTableName="PROJETO_USUARIO"
+			referencedColumnNames="ID" 
+			baseTableName="PROJETO_USUARIO_GRUPO_PAPEL"
+			baseColumnNames="ID_USUARIO" />
+			
+		<addForeignKeyConstraint
+			constraintName="FK_USUARIOGRUPOPAPEL_GRUPO"
+			referencedTableName="PROJETO_GRUPO_PAPEL"
+			referencedColumnNames="ID" 
+			baseTableName="PROJETO_USUARIO_GRUPO_PAPEL"
+			baseColumnNames="ID_GRUPO_PAPEL" />
 	</changeSet>
-
-	<changeSet id="210" author="laleska.santos">
-		<addForeignKeyConstraint constraintName="FK_ITEM_PROD_PRODUTO"
-			referencedTableName="SCR_PRODUTO" referencedColumnNames="ID"
-			baseTableName="SCR_ITEM_PROD" baseColumnNames="ID_PRODUTO" />
-	<!-- PAU AQUI -->
-		<addForeignKeyConstraint constraintName="FK_ITEM_PROD_PEDIDO"
-			referencedTableName="SCR_PEDIDO" referencedColumnNames="ID"
-			baseTableName="SCR_ITEM_PROD" baseColumnNames="ID_PEDIDO" />
-	</changeSet>
-
-	<changeSet id="220" author="laleska.santos">
-		<addForeignKeyConstraint constraintName="FK_ITEM_INGREDIENTE_PRODUTO"
-			referencedTableName="SCR_PRODUTO" referencedColumnNames="ID"
-			baseTableName="SCR_ITEM_INGREDIENTE" baseColumnNames="PROD_ID" />
-
-		<addForeignKeyConstraint constraintName="FK_ITEM_INGREDIENTE_INGREDIENTE"
-			referencedTableName="SCR_INGREDIENTE" referencedColumnNames="ID"
-			baseTableName="SCR_ITEM_INGREDIENTE" baseColumnNames="INGRED_ID" />
-	</changeSet>
-
-	<changeSet id="048" author="juliano.cesar">
-		<addForeignKeyConstraint constraintName="FK_PEDIDO_COMANDA"
-			referencedTableName="SCR_COMANDA" referencedColumnNames="ID"
-			baseTableName="SCR_PEDIDO" baseColumnNames="ID_COMANDA" />
-	</changeSet>
-
-	<changeSet id="230" author="juliano.cesar">
-		<addForeignKeyConstraint constraintName="FK_PEDIDO_GARCOM"
-			referencedTableName="SCR_GARCOM" referencedColumnNames="ID"
-			baseTableName="SCR_PEDIDO" baseColumnNames="ID_GARCOM" />
-	</changeSet>
-
-	<changeSet id="240" author="juliano.cesar">
-		<addForeignKeyConstraint constraintName="FK_LISTA_PEDIDOS_PEDIDO"
-			referencedTableName="SCR_PEDIDO" referencedColumnNames="ID"
-			baseTableName="SCR_LISTA_PEDIDOS" baseColumnNames="ID_PEDIDO" />
-	</changeSet>
-
+	
 </databaseChangeLog>
