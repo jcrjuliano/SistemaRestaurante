@@ -2,6 +2,8 @@ package br.com.fatec.sistemarestaurante.test.commons;
 
 import java.util.Map;
 
+import org.junit.Before;
+
 import br.com.fatec.sistemarestaurante.api.dao.ComandaDAO;
 import br.com.fatec.sistemarestaurante.api.dao.GarcomDAO;
 import br.com.fatec.sistemarestaurante.api.dao.IngredienteDAO;
@@ -26,6 +28,17 @@ import br.com.fatec.sistemarestaurante.api.entity.ItemProd;
 import br.com.fatec.sistemarestaurante.api.entity.ListaPedidos;
 import br.com.fatec.sistemarestaurante.api.entity.Pedido;
 import br.com.fatec.sistemarestaurante.api.entity.Produto;
+import br.com.fatec.sistemarestaurante.api.service.ComandaService;
+import br.com.fatec.sistemarestaurante.api.service.GarcomService;
+import br.com.fatec.sistemarestaurante.api.service.IngredienteService;
+import br.com.fatec.sistemarestaurante.api.service.ItemIngredienteService;
+import br.com.fatec.sistemarestaurante.api.service.ItemProdService;
+import br.com.fatec.sistemarestaurante.api.service.ListaPedidosService;
+import br.com.fatec.sistemarestaurante.api.service.PedidoService;
+import br.com.fatec.sistemarestaurante.api.service.ProdutoService;
+import br.com.fatec.sistemarestaurante.core.converter.ComandaDTOConverter;
+import br.com.fatec.sistemarestaurante.core.converter.GarcomDTOConverter;
+import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 import com.google.common.collect.Maps;
 
@@ -39,6 +52,18 @@ public class TestCenario extends TestBase{
 	protected ListaPedidosDAO listaPedidosDAO;
 	protected PedidoDAO pedidoDAO;
 	protected ProdutoDAO produtoDAO;
+	
+	protected ComandaService comandaService;
+	protected GarcomService garcomService;
+	protected IngredienteService ingredienteService;
+	protected ItemIngredienteService itemIngredienteService;
+	protected ItemProdService itemProdService;
+	protected ListaPedidosService listaPedidosService;
+	protected PedidoService pedidoService;
+	protected ProdutoService produtoService;
+	
+	protected ComandaDTOConverter comandaConverter;
+	protected GarcomDTOConverter garcomConverter;
 		
 	protected Map<Long, Comanda> comandas = Maps.newHashMap();
 	protected Map<Long, Garcom> garcons = Maps.newHashMap();
@@ -57,6 +82,31 @@ public class TestCenario extends TestBase{
 	protected Map<Long, ListaPedidosDTO> listaPedidosDTO = Maps.newHashMap();
 	protected Map<Long, PedidoDTO> pedidoDTO = Maps.newHashMap();
 	protected Map<Long, ProdutoDTO> produtoDTO = Maps.newHashMap();
+	
+	@Before
+	public void upCenario() {
+		this.comandaDAO = ImplFinder.getImpl(ComandaDAO.class);
+		this.garcomDAO = ImplFinder.getImpl(GarcomDAO.class);
+		this.ingredienteDAO = ImplFinder.getImpl(IngredienteDAO.class);
+		this.itemIngredienteDAO = ImplFinder.getImpl(ItemIngredienteDAO.class);
+		this.itemProdDAO = ImplFinder.getImpl(ItemProdDAO.class);
+		this.listaPedidosDAO = ImplFinder.getImpl(ListaPedidosDAO.class);
+		this.pedidoDAO = ImplFinder.getImpl(PedidoDAO.class);
+		this.produtoDAO = ImplFinder.getImpl(ProdutoDAO.class);
+		
+		this.comandaConverter = ImplFinder.getImpl(ComandaDTOConverter.class);
+		this.garcomConverter = ImplFinder.getImpl(GarcomDTOConverter.class);
+		
+		this.comandaService = ImplFinder.getImpl(ComandaService.class);
+		this.garcomService = ImplFinder.getImpl(GarcomService.class);
+		this.ingredienteService = ImplFinder.getImpl(IngredienteService.class);
+		this.itemIngredienteService = ImplFinder.getImpl(ItemIngredienteService.class);
+		this.itemProdService = ImplFinder.getImpl(ItemProdService.class);
+		this.listaPedidosService = ImplFinder.getImpl(ListaPedidosService.class);
+		this.pedidoService = ImplFinder.getImpl(PedidoService.class);
+		this.produtoService = ImplFinder.getImpl(ProdutoService.class);
+		
+	}
 	
 
 }

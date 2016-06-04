@@ -10,7 +10,7 @@ public interface GarcomService {
 	
 	void atualizar(GarcomDTO garcom);
 	
-	void deletar(GarcomDTO garcom);
+	void deletar(Long garcomId);
 	
 	List<GarcomDTO> listar();
 	

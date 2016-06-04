@@ -5,12 +5,14 @@ public class GarcomDTO {
 	private String nome;
 	private String registro;
 	private String sexo;
-	private Integer idade;
+	private String idade;
 	
+	public GarcomDTO(){
 	
+	}
 	
 	public GarcomDTO(Long id, String nome, String registro, String sexo,
-			Integer idade) {
+			String idade) {
 		this.id = id;
 		this.nome = nome;
 		this.registro = registro;
@@ -41,10 +43,10 @@ public class GarcomDTO {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	public Integer getIdade() {
+	public String getIdade() {
 		return idade;
 	}
-	public void setIdade(Integer idade) {
+	public void setIdade(String idade) {
 		this.idade = idade;
 	}
 	@Override
