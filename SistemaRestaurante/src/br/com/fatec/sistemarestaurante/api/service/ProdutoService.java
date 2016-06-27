@@ -15,5 +15,8 @@ public interface ProdutoService {
 	List<ProdutoDTO> listar();
 	
 	ProdutoDTO buscarPorId(Long produtoId);
+	
+	List<ProdutoDTO> listarPorStatus(String status);
+
 
 }

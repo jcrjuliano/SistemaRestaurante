@@ -71,6 +71,24 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 			DbUtils.closeQuietly(find);
 		}
 	}
+	
+	@Override
+	public List<Produto> findByStats(String status){
+		Connection conn = null;
+		PreparedStatement find = null;
+		try {
+			conn = ConfigDBMapper.getDefaultConnection();
+			find = conn.prepareStatement("SELECT * FROM " + Produto.TABLE + " WHERE " + Produto.COL_STATUS + " = ?");
+			find.setString(1, status);
+			ResultSet rs = find.executeQuery();
+			return this.buildProdutos(rs);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			DbUtils.closeQuietly(conn);
+			DbUtils.closeQuietly(find);
+		}
+	}
 
 	@Override
 	public List<Produto> findAll() {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+	"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="projeto" extends="json-default" namespace="/">
+		<interceptors>
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="json">
+					<param name="enableSMD">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			<interceptor name="cookie" class="org.apache.struts2.interceptor.CookieInterceptor"/>
+			<interceptor name="cookieProvider" class="org.apache.struts2.interceptor.CookieProviderInterceptor"/>
+		</interceptors>
+
+
+		<action name="*!*" class="br.com.fatec.sistemarestaurante.web.action.{1}Action"
+			method="{2}">
+			<interceptor-ref name="cookie"></interceptor-ref>
+		    <interceptor-ref name="cookieProvider"></interceptor-ref>
+		    <interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="foi" type="json" />
+			<result name="jsp">index.jsp</result>
+		</action>
+
+	</package>
+</struts>

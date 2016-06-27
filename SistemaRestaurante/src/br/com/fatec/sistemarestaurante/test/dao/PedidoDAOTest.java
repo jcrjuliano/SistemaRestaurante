@@ -200,5 +200,34 @@ public class PedidoDAOTest extends TestBase {
 		Assert.assertEquals("15/03/2016 15:20:00", format.format(encontrados.get(1).getDataAbertura()));
 		Assert.assertEquals(100,00, encontrados.get(1).getValorTotal());
 	}
+	
+	@Test
+	public void testCalcTotalComanda(){
+		Pedido ped1 = new Pedido();
+		Pedido ped2 = new Pedido();
+		dataDeAbertura.set(2016, 2, 19, 19, 20, 0);
+
+		ped1.setStatus("Aberto");
+		ped1.setComanda(comanda);
+		ped1.setGarcom(garcom);
+		ped1.setDataAbertura(dataDeAbertura.getTime());
+		ped1.setValorTotal(12.90);
+			
+		
+		dataDeAbertura.set(2016, 2, 15, 15, 20, 0);
+		ped2.setStatus("Fechada");
+		ped2.setComanda(comanda);
+		ped2.setGarcom(garcom);
+		ped2.setDataAbertura(dataDeAbertura.getTime());
+		ped2.setValorTotal(100.00);
+		
+		this.dao.save(ped1);
+		this.dao.save(ped2);
+		
+		Double valorTotal = this.dao.calcTotalComanda(comanda.getId());
+		
+		Assert.assertEquals(new Double(12.90 + 100.00), valorTotal);
+		
+	}
 
 }

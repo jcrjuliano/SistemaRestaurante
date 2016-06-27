@@ -15,5 +15,7 @@ public interface PedidoDAO {
 	void delete(Long id);
 
 	List<Pedido> findAll();
+	
+	Double calcTotalComanda(Long comandaId);
 
 }

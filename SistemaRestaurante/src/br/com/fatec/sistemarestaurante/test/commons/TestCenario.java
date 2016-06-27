@@ -38,6 +38,9 @@ import br.com.fatec.sistemarestaurante.api.service.PedidoService;
 import br.com.fatec.sistemarestaurante.api.service.ProdutoService;
 import br.com.fatec.sistemarestaurante.core.converter.ComandaDTOConverter;
 import br.com.fatec.sistemarestaurante.core.converter.GarcomDTOConverter;
+import br.com.fatec.sistemarestaurante.core.converter.IngredienteDTOConverter;
+import br.com.fatec.sistemarestaurante.core.converter.PedidoDTOConverter;
+import br.com.fatec.sistemarestaurante.core.converter.ProdutoDTOConverter;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
 
 import com.google.common.collect.Maps;
@@ -64,6 +67,9 @@ public class TestCenario extends TestBase{
 	
 	protected ComandaDTOConverter comandaConverter;
 	protected GarcomDTOConverter garcomConverter;
+	protected PedidoDTOConverter pedidoConverter;
+	protected ProdutoDTOConverter produtoConverter;
+	protected IngredienteDTOConverter ingredienteConverter;
 		
 	protected Map<Long, Comanda> comandas = Maps.newHashMap();
 	protected Map<Long, Garcom> garcons = Maps.newHashMap();
@@ -94,17 +100,25 @@ public class TestCenario extends TestBase{
 		this.pedidoDAO = ImplFinder.getImpl(PedidoDAO.class);
 		this.produtoDAO = ImplFinder.getImpl(ProdutoDAO.class);
 		
-		this.comandaConverter = ImplFinder.getImpl(ComandaDTOConverter.class);
-		this.garcomConverter = ImplFinder.getImpl(GarcomDTOConverter.class);
+		this.comandaConverter = ImplFinder.getFinalImpl(ComandaDTOConverter.class);
+		this.garcomConverter = ImplFinder.getFinalImpl(GarcomDTOConverter.class);
+		this.pedidoConverter = ImplFinder.getFinalImpl(PedidoDTOConverter.class);
+		this.produtoConverter = ImplFinder.getFinalImpl(ProdutoDTOConverter.class);
+		this.ingredienteConverter = ImplFinder.getFinalImpl(IngredienteDTOConverter.class);
 		
 		this.comandaService = ImplFinder.getImpl(ComandaService.class);
 		this.garcomService = ImplFinder.getImpl(GarcomService.class);
+		this.pedidoService = ImplFinder.getImpl(PedidoService.class);
+		this.produtoService = ImplFinder.getImpl(ProdutoService.class);
+		this.ingredienteService = ImplFinder.getImpl(IngredienteService.class);
+		
+		/*this.comandaService = ImplFinder.getImpl(ComandaService.class);
 		this.ingredienteService = ImplFinder.getImpl(IngredienteService.class);
 		this.itemIngredienteService = ImplFinder.getImpl(ItemIngredienteService.class);
 		this.itemProdService = ImplFinder.getImpl(ItemProdService.class);
 		this.listaPedidosService = ImplFinder.getImpl(ListaPedidosService.class);
 		this.pedidoService = ImplFinder.getImpl(PedidoService.class);
-		this.produtoService = ImplFinder.getImpl(ProdutoService.class);
+		this.produtoService = ImplFinder.getImpl(ProdutoService.class);*/
 		
 	}
 	

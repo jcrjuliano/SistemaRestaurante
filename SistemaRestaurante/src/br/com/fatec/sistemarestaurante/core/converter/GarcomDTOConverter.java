@@ -12,13 +12,17 @@ public class GarcomDTOConverter implements DTOConverter<Garcom, GarcomDTO> {
 
 	@Override
 	public GarcomDTO toDTO(Garcom entidade) {
-		GarcomDTO dto = new GarcomDTO();
-		dto.setId(entidade.getId());
-		dto.setNome(entidade.getNome());
-		dto.setRegistro(entidade.getRegistro());
-		dto.setSexo(entidade.getSexo());
-		dto.setIdade(entidade.getIdade());
+		GarcomDTO dto = null;
+		if (entidade != null){
+			dto = new GarcomDTO();
+			dto.setId(entidade.getId());
+			dto.setNome(entidade.getNome());
+			dto.setRegistro(entidade.getRegistro());
+			dto.setSexo(entidade.getSexo());
+			dto.setIdade(entidade.getIdade());
+		}		
 		return dto;
+		
 	}
 
 	@Override

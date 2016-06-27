@@ -16,4 +16,5 @@ public interface ProdutoDAO {
 
 	void delete(Long id);
 
+	public List<Produto> findByStats(String status);
 }

@@ -34,6 +34,6 @@ public class IngredienteDTO {
 
 	@Override
 	public String toString() {
-		return "Grupo[" + this.id + " - " + this.descricao + "]";
+		return "Ingrediente[" + this.id + " - " + this.descricao + "]";
 	}
 }

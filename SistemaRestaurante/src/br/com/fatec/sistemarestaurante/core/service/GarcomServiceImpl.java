@@ -15,7 +15,7 @@ public class GarcomServiceImpl implements GarcomService {
 	
 	public GarcomServiceImpl(){
 		garcomDAO = ImplFinder.getImpl(GarcomDAO.class);
-		garcomDTOConverter = ImplFinder.getImpl(GarcomDTOConverter.class);
+		garcomDTOConverter = ImplFinder.getFinalImpl(GarcomDTOConverter.class);
 	}
 	@Override
 	public GarcomDTO salvar(GarcomDTO garcomDTO) {

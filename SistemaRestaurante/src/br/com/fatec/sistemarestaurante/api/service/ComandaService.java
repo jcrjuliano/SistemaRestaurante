@@ -8,7 +8,7 @@ public interface ComandaService {
 	
 	ComandaDTO salvar(ComandaDTO comanda);
 	
-	void atualizar(ComandaDTO comanda);
+	ComandaDTO fecharComanda(ComandaDTO comanda);
 	
 	void deletar(Long comandaId);
 	

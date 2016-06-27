@@ -14,6 +14,6 @@ public interface IngredienteService {
 	
 	List<IngredienteDTO> listar();
 	
-	IngredienteDTO buscarPorId(Long ingredienteId);
+	IngredienteDTO findById(Long id);
 
 }

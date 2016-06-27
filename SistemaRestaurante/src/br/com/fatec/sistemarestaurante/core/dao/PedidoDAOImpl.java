@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 import br.com.fatec.sistemarestaurante.api.dao.ComandaDAO;
 import br.com.fatec.sistemarestaurante.api.dao.GarcomDAO;
 import br.com.fatec.sistemarestaurante.api.dao.PedidoDAO;
+import br.com.fatec.sistemarestaurante.api.entity.Comanda;
 import br.com.fatec.sistemarestaurante.api.entity.Pedido;
 import br.com.spektro.minispring.core.dbmapper.ConfigDBMapper;
 import br.com.spektro.minispring.core.implfinder.ImplFinder;
@@ -167,5 +168,30 @@ public class PedidoDAOImpl implements PedidoDAO {
 		return pedidos;
 	}
 
+	@Override
+	public Double calcTotalComanda(Long comandaId) {
+		Connection conn = null;
+		PreparedStatement find = null;
+		Double retorno = new Double(0.00);
+		List<Pedido> pedidos = null;
+		try {
+			conn = ConfigDBMapper.getDefaultConnection();
+			String sql = "SELECT * FROM " + Pedido.TABLE + " WHERE "
+					+ Pedido.COL_ID_COMANDA + " = ?";
+			find = conn.prepareStatement(sql);
+			find.setLong(1, comandaId);
+			ResultSet rs = find.executeQuery();
+			pedidos = this.buildPedidos(rs);
+			for(Pedido p : pedidos){
+				retorno += p.getValorTotal();
+			}
+			return retorno;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			DbUtils.closeQuietly(conn);
+			DbUtils.closeQuietly(find);
+		}
+	}
 
 }
